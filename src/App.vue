@@ -6,20 +6,14 @@
       clipped
     >
       <v-list dense>
-        <v-list-item @click="">
-          <v-list-item-action>
-            <v-icon>mdi-view-dashboard</v-icon>
-          </v-list-item-action>
+        <v-list-item to="/">
           <v-list-item-content>
-            <v-list-item-title>Dashboard</v-list-item-title>
+            <v-list-item-title>Inicio</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item @click="">
-          <v-list-item-action>
-            <v-icon>mdi-settings</v-icon>
-          </v-list-item-action>
+        <v-list-item to="/tarefas">
           <v-list-item-content>
-            <v-list-item-title>Settings</v-list-item-title>
+            <v-list-item-title>Tarefas</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -30,7 +24,7 @@
       clipped-left
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>ePortfolio de Mario</v-toolbar-title>
     </v-app-bar>
 
     <v-content>

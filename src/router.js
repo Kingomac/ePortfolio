@@ -26,9 +26,9 @@ export default new Router({
       component: () => import('./views/Tarefas.vue')
     },
     {
-      path: '/tarefas/que-e-un-eportfolio',
+      path: '/tarefas/:id',
       name: 'tarefa-01',
-      component: () => import('./views/Tarefas/01.vue')
+      component: () => import('./views/TarefaCompleta.vue')
     },
     {
       path: '/proxectos',

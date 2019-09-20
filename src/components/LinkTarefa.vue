@@ -1,5 +1,7 @@
 <template>
-<router-link :to="to" class="collection-item red-text text-darken-1">{{text}}</router-link>    
+<v-list-item :to="to">
+<v-list-item-title>{{text}}</v-list-item-title>
+</v-list-item>
 </template>
 <script>
 export default {
