@@ -16,6 +16,11 @@
             <v-list-item-title>Tarefas</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item to="/proxectos">
+          <v-list-item-content>
+            <v-list-item-title>Proxectos</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -29,7 +34,6 @@
 
     <v-content>
         <v-row
-          align="top"
           justify="center"
         >
         <v-container
@@ -43,7 +47,7 @@
     </v-content>
 
     <v-footer app>
-      <span>&copy; 2019</span>
+      <span>&copy; 2019 <router-link style="color: transparent" to="/engadir">Engadir</router-link></span>
     </v-footer>
   </v-app>
 </template>
