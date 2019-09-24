@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="width:100%">
     <h1>Tarefas</h1>
     <v-container fluid>
         <v-row justify="center">

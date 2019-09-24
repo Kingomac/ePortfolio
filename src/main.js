@@ -2,9 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
-import firebase from 'firebase'
 
 Vue.config.productionTip = false
+
+import firebase from 'firebase'
 
 firebase.initializeApp({
   apiKey: "AIzaSyAoh5iLXwQFsLsd5NC9_enJgi6MWlreavQ",
@@ -14,8 +15,8 @@ firebase.initializeApp({
   storageBucket: "e-portfolio-2ffac.appspot.com",
   messagingSenderId: "758097992822",
   appId: "1:758097992822:web:9b0404b5bc415ec8b91357"
-  });
-firebase.auth().signInWithEmailAndPassword('kingomacyt@gmail.com','javascript');
+});
+firebase.auth().signInWithEmailAndPassword('kingomacyt@gmail.com', 'javascript');
 
 
 new Vue({
@@ -23,5 +24,3 @@ new Vue({
   vuetify,
   render: h => h(App)
 }).$mount('#app')
-
-
