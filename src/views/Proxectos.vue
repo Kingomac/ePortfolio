@@ -46,8 +46,12 @@ export default {
       let array = [];
       firebase.firestore().collection(trimestre).orderBy('creacion').onSnapshot((snapshot) => {
         snapshot.forEach((doc) => {
-          array.push(doc.data());
-          console.log(doc.data());
+          let data = {
+            id: doc.id,
+            titulo: doc.data().titulo
+          }
+          array.push(data);
+          console.log(data);
         })
       })
       return array;

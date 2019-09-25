@@ -19,7 +19,7 @@ export default new Router({
     },
     {
       path: '/tarefas/:trimestre/:id',
-      name: 'tarefa-01',
+      name: 'tarefa-completa',
       component: () =>
         import ('./views/TarefaCompleta.vue')
     },
@@ -34,6 +34,12 @@ export default new Router({
       name: 'engadir',
       component: () =>
         import ('./views/Engadir.vue')
+    },
+    {
+      path: '/proxectos/:trimestre/:id',
+      name: 'proxectos-completo',
+      component: () =>
+        import ('./views/ProxectoCompleto.vue')
     }
   ]
 })
