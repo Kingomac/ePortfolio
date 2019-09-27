@@ -1,8 +1,10 @@
 <template>
 <v-container fluid>
-<p v-if="contido.includes('img')">Para las imágenes usa la siguiente sintxis => <code>&lt;img=LINK/img&gt;</code>. Así se sustituirá tu imagen por un montón de divs con clases para que tenga Lazy Load y sea responsive. La imagen se recortará para que tenga una relación de aspecto de 16:9</p>
+<p v-if="contido.includes('img')">Para las imágenes usa la siguiente sintxis => <code>&lt;img=LINK&lt;w=TAMAÑO(100%, 1000px...)/img&gt;</code>. Así se sustituirá tu imagen por un montón de divs con clases para que tenga Lazy Load y sea responsive. La imagen se recortará para que tenga una relación de aspecto de 16:9</p>
 <v-content class="mr-10">
   <h1>Engadir</h1>
+  <v-row>
+      <v-col>
   <v-text-field
   class="mt-3"
     v-model="tecnologia"
@@ -10,6 +12,11 @@
     label="Escribe la contraseña para poder añadir contenido"
     outlined
     />
+    </v-col>
+    <v-col>
+        <v-btn class="mt-5" @click="this.storeCanEdit">Iniciar sesión</v-btn>
+    </v-col>
+  </v-row>
     <form v-if="sabeDeVue">
         <v-row>
             <v-col>
@@ -54,7 +61,7 @@ export default Vue.extend({
             let timestamp = firebase.firestore.FieldValue.serverTimestamp();
             const data = {
                 titulo: this.titulo,
-                contido: this.processContent,
+                contido: this.processContent(this.contido),
                 creacion: timestamp
             }
             firebase.firestore().collection(this.collection).doc().set(data);
@@ -68,7 +75,15 @@ export default Vue.extend({
             firebase.firestore().collection('manager').doc('contraseña').get().then((e) => {
                 this.password = e.data().pass;
             })
-        }
+        },
+        storeCanEdit: function(){
+            if(this.tecnologia == this.password){
+                window.sessionStorage.setItem('dasfargdgd', 'sgdgdag');
+            }
+        },
+        processContent(content){
+            return content.split('<img=').join('<div class="v-responsive v-image"><div class="v-responsive__sizer" style="padding-bottom: 56.25%;"></div><div class="v-image__image v-image__image--cover" style="background-image: url(&quot;').split('<w=').join('&quot;); background-position: center center;"></div><div class="v-responsive__content" style="width:').split('/img>').join('"></div></div>').replace(/(\r\n|\n|\r)/gm, "");
+      }
     },
     computed:{
         collection(){
@@ -84,9 +99,6 @@ export default Vue.extend({
                 break;
                 default: return 'error';
             }
-        },
-        processContent(){
-            return this.contido.split('<img=').join('<div class="v-responsive v-image"><div class="v-responsive__sizer" style="padding-bottom: 56.25%;"></div><div class="v-image__image v-image__image--cover" style="background-image: url(&quot;').split('/img>').join('&quot;); background-position: center center;"></div><div class="v-responsive__content" style="width: 100%;"></div></div>');
         },
         sabeDeVue(){
                 if(this.tecnologia == this.password){

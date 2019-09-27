@@ -40,6 +40,12 @@ export default new Router({
       name: 'proxectos-completo',
       component: () =>
         import ('./views/ProxectoCompleto.vue')
+    },
+    {
+      path: '/editar/:collection/:id',
+      name: 'editar',
+      component: () =>
+        import ('./views/Editar.vue')
     }
   ]
 })

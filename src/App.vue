@@ -58,10 +58,10 @@
       source: String,
     },
     data: () => ({
-      drawer: null,
+      drawer: null
     }),
     created () {
       this.$vuetify.theme.dark = true
-    },
+    }
   }
 </script>

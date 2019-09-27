@@ -41,16 +41,6 @@
                 collections: ['tarefas', 'tarefas2', 'tarefas3']
             }
         },
-        beforeMount() {
-            this.collections.forEach((col) => {
-                this.initializeFirestore(col);
-            })
-        },
-        mounted() {
-            this.collections.forEach((col) => {
-                this.setSnapshot(col);
-            })
-        },
         methods: {
             resetTarefas: function(collection) {
                 switch (collection) {
@@ -65,34 +55,24 @@
                         break;
                 }
             },
-            initializeFirestore: function(collection) {
-                this.resetTarefas(collection)
-                console.log('Initializing Firebase...');
-                firebase.firestore().collection(collection).orderBy('creacion').get().then((col) => {
-                    col.forEach((doc) => {
-                        this.tarefas.push({
-                            id: doc.id,
-                            title: doc.data().titulo,
-                            content: doc.data().contido
-                        })
-                    })
-                })
-            },
             setSnapshot: function(collection) {
+                let array = [];
                 firebase.firestore().collection(collection).orderBy('creacion').onSnapshot((snapshot) => {
-                    this.resetTarefas(collection)
                     snapshot.forEach((doc) => {
-                        this.tarefas.push({
-                            id: doc.id,
-                            title: doc.data().titulo,
-                            content: doc.data().contido
-                        });
-                    })
-                })
-            },
-            titleNormalize: function(title) {
-                return title.split(' ').join('-').replace('¿', '').replace('¡', '').replace('?', '').replace('!', '').replace('é', 'e').toLowerCase();
-            }
-        }
+                    let data = {
+                        title: doc.data().titulo,
+                        id: doc.id
+                    }
+                    array.push(data);
+          })
+        })
+        return array;
+      }
+        },
+        created(){
+            this.tarefas = this.setSnapshot('tarefas');
+            this.tarefas2 = this.setSnapshot('tarefas2');
+            this.tarefas3 = this.setSnapshot('tarefas3');
+        },
     }
 </script>
