@@ -63,9 +63,9 @@
                         title: doc.data().titulo,
                         id: doc.id
                     }
-                    array.push(data);
-          })
-        })
+                    if(!array.includes(data)) array.push(data);
+                })
+            })
         return array;
       }
         },

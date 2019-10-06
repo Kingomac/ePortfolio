@@ -8,6 +8,15 @@
 <div v-html="content"></div>
 </div>
 </template>
+<style>
+img{
+  max-width: 100%;
+  height: auto;
+}
+p{
+    text-align: justify;
+}
+</style>
 <script>
 import firebase from 'firebase'
 

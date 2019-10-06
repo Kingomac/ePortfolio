@@ -1,6 +1,5 @@
 <template>
 <v-container fluid>
-<p v-if="contido.includes('img')">Para las imágenes usa la siguiente sintxis => <code>&lt;img=LINK&lt;w=TAMAÑO(100%, 1000px...)/img&gt;</code>. Así se sustituirá tu imagen por un montón de divs con clases para que tenga Lazy Load y sea responsive. La imagen se recortará para que tenga una relación de aspecto de 16:9</p>
 <v-content class="mr-10">
   <h1>Engadir</h1>
   <v-row>
@@ -38,23 +37,29 @@
         v-model="titulo"
         required
         label="Titulo"/>
-        <v-textarea
-            v-model="contido"
-            outlined
-            label="Escribe HTML"
-            required
-            rows="20"/>
-          <v-btn class="mr-4 success" @click="submit">Engadir</v-btn>
+        <MonacoEditor style="height: 500px" v-model="contido" :options="options"/>
+        <v-btn class="mr-4 success" @click="submit">Engadir</v-btn>
+
     </form>
 </v-content>
 </v-container>
 </template>
-<script lang="ts">
+<script>
 import Vue from 'vue'
 import firebase from 'firebase'
-export default Vue.extend({
+import MonacoEditor from 'vue-monaco'
+export default {
+    components: {
+        MonacoEditor
+    },
     data(){
-        return {titulo: '', contido: '', tipo: 'Tarefa', trimestre: 1, tecnologia: '', password: ''}
+        return {
+            titulo: '', contido: '', tipo: 'Tarefa', trimestre: 1, tecnologia: '', password: '',
+            options: {
+                language: 'html',
+                theme: 'vs-dark'
+            }
+        }
     },
     methods: {
         submit: function(e){
@@ -81,9 +86,9 @@ export default Vue.extend({
                 window.sessionStorage.setItem('dasfargdgd', 'sgdgdag');
             }
         },
-        processContent(content){
-            return content.split('<img=').join('<div class="v-responsive v-image"><div class="v-responsive__sizer" style="padding-bottom: 56.25%;"></div><div class="v-image__image v-image__image--cover" style="background-image: url(&quot;').split('<w=').join('&quot;); background-position: center center;"></div><div class="v-responsive__content" style="width:').split('/img>').join('"></div></div>').replace(/(\r\n|\n|\r)/gm, "");
-      }
+        processContent(content) {
+            return content.split('<a ').join('<a target="_blank" ').replace(/(\r\n|\n|\r)/gm, "").replace("http://", "https://");
+        }
     },
     computed:{
         collection(){
@@ -112,5 +117,5 @@ export default Vue.extend({
     mounted(){
         this.getPassword();
     }
-})
+}
 </script>

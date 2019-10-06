@@ -1,4 +1,6 @@
 <template>
+<v-container fluid>
+    <v-content class="mr-10">
      <form v-if="sabeDeVue">
         <v-row>
             <v-col>
@@ -20,19 +22,20 @@
         v-model="titulo"
         required
         label="Titulo"/>
-        <v-textarea
-            v-model="contido"
-            outlined
-            label="Escribe HTML"
-            required
-            rows="20"/>
-          <v-btn class="mr-4 success" @click="save">Actualizar</v-btn>
+        <MonacoEditor style="height: 500px" v-model="contido" :options="options"/>
+        <v-btn class="mr-4 success" @click="save">Actualizar</v-btn>
     </form>
+    </v-content>
+</v-container>
 </template>
 <script>
-import firebase, { initializeApp } from 'firebase'
+import firebase from 'firebase'
+import MonacoEditor from 'vue-monaco'
 
 export default {
+    components:{
+        MonacoEditor
+    },
     computed:{
         sabeDeVue: function(){
           if(window.sessionStorage.getItem('dasfargdgd') == 'sgdgdag'){
@@ -47,7 +50,7 @@ export default {
         intialize: function(){
             firebase.firestore().collection(this.collection).doc(this.id).get().then((resp) => {
                 this.titulo = resp.data().titulo;
-                this.contido = resp.data().contido;
+                this.contido = this.unminify(resp.data().contido);
                 this.creacion = resp.data().creacion;
             });
             if(this.collection.includes('tarefa')) this.tipo = 'Tarefa';
@@ -66,9 +69,13 @@ export default {
             }
             firebase.firestore().collection(this.collection).doc(this.id).set(data);
         },
-        processContent(content){
-            return content.split('<img=').join('<div class="v-responsive v-image"><div class="v-responsive__sizer" style="padding-bottom: 56.25%;"></div><div class="v-image__image v-image__image--cover" style="background-image: url(&quot;').split('<w=').join('&quot;); background-position: center center;"></div><div class="v-responsive__content" style="width:').split('/img>').join('"></div></div>').replace(/(\r\n|\n|\r)/gm, "");
-      }
+        unminify: function unminify(code) {
+            return code.split('<').join('\n<').replace('\n</', '</').slice(1);
+        },
+        processContent: function(content) {
+            return content.split('<a ').join('<a target="_blank" ').replace(/(\r\n|\n|\r)/gm, "").replace("http://", "https://");
+        }
+        
     },
     data(){
         return {
@@ -78,7 +85,11 @@ export default {
             trimestre: 1,
             creacion: '',
             collection: this.$route.params.collection,
-            id: this.$route.params.id
+            id: this.$route.params.id,
+            options: {
+                language: 'html',
+                theme: 'vs-dark'
+            }
         }
     },
     created(){

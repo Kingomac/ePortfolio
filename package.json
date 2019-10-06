@@ -1,5 +1,5 @@
 {
-  "name": "dssdad",
+  "name": "e-portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,9 @@
     "core-js": "^2.6.5",
     "firebase": "^6.6.2",
     "material-design-icons-iconfont": "^5.0.1",
+    "monaco-editor-webpack-plugin": "^1.7.0",
     "vue": "^2.6.10",
+    "vue-monaco": "^1.1.0",
     "vue-router": "^3.0.3",
     "vuetify": "^2.0.18"
   },
