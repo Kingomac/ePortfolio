@@ -46,7 +46,8 @@
 </template>
 <script>
 import Vue from 'vue'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 import MonacoEditor from 'vue-monaco'
 export default {
     components: {

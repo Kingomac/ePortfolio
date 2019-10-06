@@ -29,7 +29,8 @@
 </v-container>
 </template>
 <script>
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 import MonacoEditor from 'vue-monaco'
 
 export default {
@@ -68,6 +69,7 @@ export default {
                 actualizacion: timestamp
             }
             firebase.firestore().collection(this.collection).doc(this.id).set(data);
+            this.$router.back();
         },
         unminify: function unminify(code) {
             return code.split('<').join('\n<').replace('\n</', '</').slice(1);

@@ -28,7 +28,8 @@
 </template>
 <script>
 import Vue from 'vue'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 import linktarefa from '../components/LinkTarefa.vue'
 export default {
     components:{

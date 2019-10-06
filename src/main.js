@@ -5,7 +5,8 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
-import firebase from 'firebase'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
 
 firebase.initializeApp({
   apiKey: "AIzaSyAoh5iLXwQFsLsd5NC9_enJgi6MWlreavQ",
@@ -16,6 +17,7 @@ firebase.initializeApp({
   messagingSenderId: "758097992822",
   appId: "1:758097992822:web:9b0404b5bc415ec8b91357"
 });
+
 firebase.auth().signInWithEmailAndPassword('kingomacyt@gmail.com', 'javascript');
 
 
