@@ -6,6 +6,9 @@
 <v-col cols="2"><v-btn v-if="signedIn" :to="'/editar/' + trimestre + '/' + this.$route.params.id" color="success">Editar</v-btn></v-col>
 </v-row>
 <div v-html="content"></div>
+<v-row v-if="signedIn">
+<v-col><escribir-comentario/></v-col>
+</v-row>
 </div>
 </template>
 <style>
@@ -20,8 +23,14 @@ p{
 <script>
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import EscribirComentario from '../components/EscribirComentario.vue'
+import Comentarios from '../components/Comentarios.vue'
 
 export default {
+    components: {
+        EscribirComentario,
+        Comentarios
+    },
     methods:{
         activateSnapshot: function(){
             firebase.firestore().collection(this.trimestre).doc(this.$route.params.id).onSnapshot((snapshot) => {

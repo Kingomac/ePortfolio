@@ -81,7 +81,6 @@ import 'firebase/firestore'
     mounted(){
       this.checkSignIn();
       this.getSuperEmails();
-      console.log(this.superEmails);
     },
     methods:{
       checkSignIn: function(){
