@@ -64,7 +64,13 @@
                         title: doc.data().titulo,
                         id: doc.id
                     }
-                    if(!array.includes(data)) array.push(data);
+                    let canSubmit = true;
+                    array.forEach((item) => {
+                        if(item.id == doc.id){
+                            canSubmit = false;
+                        }
+                    })
+                    if(canSubmit) array.push(data);
                 })
             })
         return array;

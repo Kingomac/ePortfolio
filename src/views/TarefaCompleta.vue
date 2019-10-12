@@ -2,8 +2,8 @@
 <div>
 <v-row>
 <v-col cols="8"><h1>{{title}}</h1></v-col>
-<v-col cols="2"><v-btn color="error" v-if="canEdit" @click="eliminar()">Eliminar</v-btn></v-col>
-<v-col cols="2"><v-btn v-if="canEdit" :to="'/editar/' + trimestre + '/' + this.$route.params.id" color="success">Editar</v-btn></v-col>
+<v-col cols="2"><v-btn color="error" v-if="signedIn" @click="eliminar()">Eliminar</v-btn></v-col>
+<v-col cols="2"><v-btn v-if="signedIn" :to="'/editar/' + trimestre + '/' + this.$route.params.id" color="success">Editar</v-btn></v-col>
 </v-row>
 <div v-html="content"></div>
 </div>
@@ -46,19 +46,12 @@ export default {
                 break;
                 default: return 'tarefas';
             }
-        },
-        canEdit(){
-                if(window.sessionStorage.getItem('dasfargdgd') == 'sgdgdag'){
-                return true;
-                }
-                else{
-                return false;
-                }
-            }
+        }
     },
     data(){
         return { title: '', content: ''}
     },
+    props: ['signedIn'],
     created(){
         this.activateSnapshot();
     }

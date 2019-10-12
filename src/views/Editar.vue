@@ -1,7 +1,7 @@
 <template>
 <v-container fluid>
     <v-content class="mr-10">
-     <form v-if="sabeDeVue">
+     <form v-if="signedIn">
         <v-row>
             <v-col>
         <v-select
@@ -25,6 +25,7 @@
         <MonacoEditor style="height: 500px" v-model="contido" :options="options"/>
         <v-btn class="mr-4 success" @click="save">Actualizar</v-btn>
     </form>
+
     </v-content>
 </v-container>
 </template>
@@ -36,16 +37,6 @@ import MonacoEditor from 'vue-monaco'
 export default {
     components:{
         MonacoEditor
-    },
-    computed:{
-        sabeDeVue: function(){
-          if(window.sessionStorage.getItem('dasfargdgd') == 'sgdgdag'){
-          return true;
-          }
-          else{
-          return false;
-          }
-        }
     },
     methods:{
         intialize: function(){
@@ -91,11 +82,13 @@ export default {
             options: {
                 language: 'html',
                 theme: 'vs-dark'
-            }
+            },
+            isSignedIn: false,
         }
     },
     created(){
         this.intialize();
-    }
+    },
+    props: ['signedIn']
 }
 </script>

@@ -21,6 +21,16 @@
             <v-list-item-title>Proxectos</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item to="/sobre-este-eportfolio">
+          <v-list-item-content>
+            <v-list-item-title>Sobre este ePortfolio</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="signedIn" to="/engadir">
+          <v-list-item-content>
+            <v-list-item-title>Crear tarefa/proxecto</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -37,31 +47,60 @@
           justify="center"
         >
         <v-container
-        class="fill-height px-8 py-6"
+        class="fill-height fill-width px-8 py-6"
         fluid
       >
-        <router-view/>
+        <router-view :signedIn="signedIn" />
         </v-container>
         </v-row>
       
     </v-content>
 
     <v-footer app>
-      <span>&copy; 2019 <router-link style="color: transparent" to="/engadir">Engadir</router-link></span>
+      <span>&copy; 2019 <span style="color: transparent; cursor:default" @click="signIn">Engadir</span></span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
   export default {
     props: {
       source: String,
     },
     data: () => ({
-      drawer: null
+      drawer: null,
+      signedIn: false,
+      superEmails: []
     }),
     created () {
-      this.$vuetify.theme.dark = true
+      this.$vuetify.theme.dark = true;
+    },
+    mounted(){
+      this.checkSignIn();
+      this.getSuperEmails();
+      console.log(this.superEmails);
+    },
+    methods:{
+      checkSignIn: function(){
+        firebase.auth().onAuthStateChanged((user) => {
+           if(user && this.superEmails.includes(user.email)) this.signedIn = true;
+           else this.signedIn = false;
+        })
+      },
+      signIn: function(){
+        let provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider);
+      },
+      getSuperEmails(){
+        firebase.firestore().collection('admins').get().then((collection) => {
+          collection.forEach((doc) => {
+            this.superEmails.push(doc.data().email);
+          })
+        })
+      }
     }
   }
 </script>

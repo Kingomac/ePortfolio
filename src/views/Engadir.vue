@@ -1,22 +1,8 @@
 <template>
 <v-container fluid>
 <v-content class="mr-10">
-  <h1>Engadir</h1>
-  <v-row>
-      <v-col>
-  <v-text-field
-  class="mt-3"
-    v-model="tecnologia"
-    type="password"
-    label="Escribe la contraseña para poder añadir contenido"
-    outlined
-    />
-    </v-col>
-    <v-col>
-        <v-btn class="mt-5" @click="this.storeCanEdit">Iniciar sesión</v-btn>
-    </v-col>
-  </v-row>
-    <form v-if="sabeDeVue">
+  <h1 v-if="!signedIn">Error 404</h1>
+    <form v-if="signedIn">
         <v-row>
             <v-col>
         <v-select
@@ -48,6 +34,7 @@
 import Vue from 'vue'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/auth'
 import MonacoEditor from 'vue-monaco'
 export default {
     components: {
@@ -55,7 +42,7 @@ export default {
     },
     data(){
         return {
-            titulo: '', contido: '', tipo: 'Tarefa', trimestre: 1, tecnologia: '', password: '',
+            titulo: '', contido: '<p>Hola</p>', tipo: 'Tarefa', trimestre: 1, tecnologia: '', password: '',
             options: {
                 language: 'html',
                 theme: 'vs-dark'
@@ -71,23 +58,12 @@ export default {
                 creacion: timestamp
             }
             firebase.firestore().collection(this.collection).doc().set(data);
-            
             this.titulo = '';
             this.contido = '';
             this.tipo = 'Tarefa';
             this.trimestre = 1;
         },
-        getPassword: function(){
-            firebase.firestore().collection('manager').doc('contraseña').get().then((e) => {
-                this.password = e.data().pass;
-            })
-        },
-        storeCanEdit: function(){
-            if(this.tecnologia == this.password){
-                window.sessionStorage.setItem('dasfargdgd', 'sgdgdag');
-            }
-        },
-        processContent(content) {
+        processContent: function(content) {
             return content.split('<a ').join('<a target="_blank" ').replace(/(\r\n|\n|\r)/gm, "").replace("http://", "https://");
         }
     },
@@ -105,18 +81,8 @@ export default {
                 break;
                 default: return 'error';
             }
-        },
-        sabeDeVue(){
-                if(this.tecnologia == this.password){
-                    return true;
-                }
-                else{
-                    return false;
-                }
         }
     },
-    mounted(){
-        this.getPassword();
-    }
+    props: ['signedIn']
 }
 </script>

@@ -18,9 +18,6 @@ firebase.initializeApp({
   appId: "1:758097992822:web:9b0404b5bc415ec8b91357"
 });
 
-firebase.auth().signInWithEmailAndPassword('kingomacyt@gmail.com', 'javascript');
-
-
 new Vue({
   router,
   vuetify,

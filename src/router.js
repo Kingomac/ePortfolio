@@ -46,6 +46,12 @@ export default new Router({
       name: 'editar',
       component: () =>
         import ('./views/Editar.vue')
+    },
+    {
+      path: '/sobre-este-eportfolio',
+      name: 'sobre',
+      component: () =>
+        import ('./views/Sobre.vue')
     }
   ]
 })
