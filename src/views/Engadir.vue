@@ -1,8 +1,8 @@
 <template>
 <v-container fluid>
 <v-content class="mr-10">
-  <h1 v-if="!signedIn">Error 404</h1>
-    <form v-if="signedIn">
+  <h1 v-if="!superSignedIn">Error 404</h1>
+    <form v-if="superSignedIn">
         <v-row>
             <v-col>
         <v-select
@@ -83,6 +83,6 @@ export default {
             }
         }
     },
-    props: ['signedIn']
+    props: ['superSignedIn']
 }
 </script>

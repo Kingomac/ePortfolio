@@ -26,9 +26,23 @@
             <v-list-item-title>Sobre este ePortfolio</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-if="signedIn" to="/engadir">
+        <v-list-item v-if="superSignedIn" to="/engadir">
           <v-list-item-content>
             <v-list-item-title>Crear tarefa/proxecto</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="!signedIn" @click="signIn">
+          <v-list-item-content>
+            <v-list-item-title>
+              <v-img alt="google" src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png" width="18px" style="display:inline-block"/> Iniciar sesión
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+          <v-list-item v-if="signedIn" @click="logOut">
+          <v-list-item-content>
+            <v-list-item-title>
+              Cerrar sesión
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -50,14 +64,14 @@
         class="fill-height fill-width px-8 py-6"
         fluid
       >
-        <router-view :signedIn="signedIn" />
+        <router-view :superSignedIn="superSignedIn" :signedIn="signedIn" />
         </v-container>
         </v-row>
       
     </v-content>
 
     <v-footer app>
-      <span>&copy; 2019 <span style="color: transparent; cursor:default" @click="signIn">Engadir</span></span>
+      <span>&copy; 2019</span>
     </v-footer>
   </v-app>
 </template>
@@ -73,6 +87,7 @@ import 'firebase/firestore'
     data: () => ({
       drawer: null,
       signedIn: false,
+      superSignedIn: false,
       superEmails: []
     }),
     created () {
@@ -85,16 +100,33 @@ import 'firebase/firestore'
     methods:{
       checkSignIn: function(){
         firebase.auth().onAuthStateChanged((user) => {
-           if(user && this.superEmails.includes(user.email)) this.signedIn = true;
-           else this.signedIn = false;
+           if(user){
+             this.signedIn = true;
+             this.superSignedIn = false;
+           }
+           if(user && this.superEmails.includes(user.email)) {
+             this.signedIn = true;
+             this.superSignedIn = true;
+           }
+           else {
+              this.signedIn = false;
+              this.superSignedIn = false;
+           }
+           console.log(this.signedIn, this.superSignedIn);
         })
       },
       signIn: function(){
+        firebase.auth().signOut();
         let provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('profile');
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
         firebase.auth().signInWithPopup(provider);
       },
+      logOut: function(){
+        firebase.auth().signOut();
+      },
       getSuperEmails(){
-        firebase.firestore().collection('admins').get().then((collection) => {
+        firebase.firestore().collection('admins').onSnapshot((collection) => {
           collection.forEach((doc) => {
             this.superEmails.push(doc.data().email);
           })

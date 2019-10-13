@@ -2,13 +2,13 @@
 <div>
 <v-row>
 <v-col cols="8"><h1>{{title}}</h1></v-col>
-<v-col cols="2"><v-btn color="error" v-if="signedIn" @click="eliminar()">Eliminar</v-btn></v-col>
-<v-col cols="2"><v-btn v-if="signedIn" :to="'/editar/' + trimestre + '/' + this.$route.params.id" color="success">Editar</v-btn></v-col>
+<v-col cols="2"><v-btn class="me-2" color="error" v-if="superSignedIn" @click="eliminar()">Eliminar</v-btn></v-col>
+<v-col cols="2"><v-btn class="me-2" v-if="superSignedIn" :to="'/editar/' + trimestre + '/' + this.$route.params.id" color="success">Editar</v-btn></v-col>
 </v-row>
 <div v-html="content"></div>
 <v-row>
-    <v-col><comentarios :tarefa="this.$route.params.id"/></v-col>
-    <v-col><escribir-comentario v-if="signedIn"/></v-col>
+    <v-col cols="12" md="6"><escribir-comentario v-if="signedIn"/></v-col>
+    <v-col cols="12" md="6"><comentarios :tarefa="this.$route.params.id"/></v-col>
 </v-row>
 </div>
 </template>
@@ -61,7 +61,7 @@ export default {
     data(){
         return { title: '', content: ''}
     },
-    props: ['signedIn'],
+    props: ['signedIn', 'superSignedIn'],
     created(){
         this.activateSnapshot();
     }

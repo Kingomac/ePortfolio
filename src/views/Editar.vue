@@ -1,7 +1,7 @@
 <template>
 <v-container fluid>
     <v-content class="mr-10">
-     <form v-if="signedIn">
+     <form v-if="superSignedIn">
         <v-row>
             <v-col>
         <v-select
@@ -82,13 +82,12 @@ export default {
             options: {
                 language: 'html',
                 theme: 'vs-dark'
-            },
-            isSignedIn: false,
+            }
         }
     },
     created(){
         this.intialize();
     },
-    props: ['signedIn']
+    props: ['superSignedIn']
 }
 </script>

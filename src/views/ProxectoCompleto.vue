@@ -1,8 +1,9 @@
 <template>
 <div>
 <h1>{{proxecto.titulo}}</h1>
-<v-row v-if="canEdit">
-    <v-btn @click="eliminar()">Eliminar</v-btn>
+<v-row v-if="superSignedIn">
+    <v-col cols="2"><v-btn class="me-2" color="error" v-if="superSignedIn" @click="eliminar()">Eliminar</v-btn></v-col>
+<v-col cols="2"><v-btn class="me-2" v-if="superSignedIn" :to="'/editar/' + trimestre + '/' + this.$route.params.id" color="success">Editar</v-btn></v-col>
 </v-row>
 <div v-html="proxecto.contido"></div>
 </div>
@@ -49,15 +50,6 @@ export default {
         }
         this.setSnapshot(this.collection);
     },
-    computed: {
-            canEdit(){
-                if(window.sessionStorage.getItem('dasfargdgd') == 'sgdgdag'){
-                return true;
-                }
-                else{
-                return false;
-                }
-            }
-        }
+    props: ['superSignedIn']
 }
 </script>

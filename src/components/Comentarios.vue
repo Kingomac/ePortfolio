@@ -2,7 +2,7 @@
 <div>
 <v-card
     class="mx-auto mt-2"
-    v-for="com in comentarios" v-bind:key="com.creacion"
+    v-for="com in comentarios" v-bind:key="com.index"
   >
     <v-card-text>
       <div>{{com.creacion}}</div>
@@ -35,6 +35,7 @@ export default {
         collection.forEach((doc, index) => {
           if(doc.data().tarefa == this.tarefa){
             const data = {
+              index: index,
               usuario: doc.data().usuario,
               contenido: doc.data().contenido,
               creacion: moment(doc.data().creado.toDate()).fromNow()

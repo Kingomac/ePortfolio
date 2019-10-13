@@ -21,14 +21,16 @@ export default Vue.extend({
   },
   methods: {
     publicarComentario: function(){
-      const data = {
-        usuario: firebase.auth().currentUser.displayName,
-        contenido: this.texto,
-        tarefa: this.$route.params.id,
-        creado: firebase.firestore.FieldValue.serverTimestamp()
+      if(this.texto !== ''){
+        const data = {
+          usuario: firebase.auth().currentUser.displayName,
+          contenido: this.texto,
+          tarefa: this.$route.params.id,
+          creado: firebase.firestore.FieldValue.serverTimestamp()
+        }
+        firebase.firestore().collection('comentarios_tarefas').doc().set(data);
+        this.texto = ''
       }
-      firebase.firestore().collection('comentarios_tarefas').doc().set(data);
-      this.texto = ''
     }
   }
 })
