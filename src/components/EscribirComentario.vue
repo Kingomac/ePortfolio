@@ -24,9 +24,11 @@ export default Vue.extend({
       const data = {
         usuario: firebase.auth().currentUser.displayName,
         contenido: this.texto,
+        tarefa: this.$route.params.id,
         creado: firebase.firestore.FieldValue.serverTimestamp()
       }
-      firebase.firestore().collection('comentarios').doc().set(data);
+      firebase.firestore().collection('comentarios_tarefas').doc().set(data);
+      this.texto = ''
     }
   }
 })

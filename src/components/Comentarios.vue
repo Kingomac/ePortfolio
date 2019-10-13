@@ -1,27 +1,53 @@
 <template>
+<div>
 <v-card
-    class="mx-auto"
+    class="mx-auto mt-2"
+    v-for="com in comentarios" v-bind:key="com.creacion"
   >
     <v-card-text>
-      <div>{{fecha}}</div>
-      <p class="display-1 text--primary">
-        {{usuario}}
+      <div>{{com.creacion}}</div>
+      <p class="headline text--primary">
+        {{com.usuario}}
       </p>
-      <p>adjective</p>
       <div class="text--primary">
-        {{contenido}}
+        {{com.contenido}}
       </div>
     </v-card-text>
   </v-card>
+</div>
 </template>
-<script lang="ts">
+<script>
 import Vue from 'vue'
-export default Vue.extend({
+import firebase from 'firebase/app'
+import 'firebase/app'
+import moment from 'moment'
+export default {
   data(){
-
+    return{
+      comentarios: []
+    }
   },
+  props: ['tarefa'],
   methods:{
-
+    cargarComentarios: function(){
+      firebase.firestore().collection('comentarios_tarefas').orderBy('creado', 'desc').onSnapshot((collection) => {
+        this.comentarios = [];
+        collection.forEach((doc, index) => {
+          if(doc.data().tarefa == this.tarefa){
+            const data = {
+              usuario: doc.data().usuario,
+              contenido: doc.data().contenido,
+              creacion: moment(doc.data().creado.toDate()).fromNow()
+            }
+            this.comentarios.push(data);
+          }
+        })
+      })
+    }
+  },
+  mounted(){
+    moment.locale('gl')
+    this.cargarComentarios();
   }
-})
+}
 </script>
