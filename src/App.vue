@@ -104,7 +104,7 @@ import 'firebase/firestore'
              this.signedIn = true;
              this.superSignedIn = false;
            }
-           if(user && this.superEmails.includes(user.email)) {
+           else if(user && this.superEmails.includes(user.email)) {
              this.signedIn = true;
              this.superSignedIn = true;
            }
@@ -119,8 +119,8 @@ import 'firebase/firestore'
         firebase.auth().signOut();
         let provider = new firebase.auth.GoogleAuthProvider();
         provider.addScope('profile');
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
         firebase.auth().signInWithPopup(provider);
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
       },
       logOut: function(){
         firebase.auth().signOut();

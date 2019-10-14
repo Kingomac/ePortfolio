@@ -18,7 +18,7 @@ export default {
   },
   data(){
     return{
-      code: '',
+      code: '<div class="display-1">Novidades!</div><p>Agora hai un sistema de comentarios para as tarefas. Isto implicou a adición do framework <a target="_blank" href="https://momentjs.com/">Moment js</a> para poñer de maneira sinxela hai canto tempo se publicou un comentario. Os comentarios funcionan coas contas de Google, é moi cómodo porque non tes que crear unha conta nova e recordar contrasinais.</p>',
       options: {
         language: 'html',
         theme: 'vs-dark'
