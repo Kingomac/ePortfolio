@@ -57,16 +57,13 @@
     </v-app-bar>
 
     <v-content>
-        <v-row
-          justify="center"
-        >
         <v-container
-        class="fill-height fill-width px-8 py-6"
-        fluid
-      >
+          justify="center"
+          class="p-2"
+          fluid
+        >
         <router-view :superSignedIn="superSignedIn" :signedIn="signedIn" />
         </v-container>
-        </v-row>
       
     </v-content>
 
@@ -112,7 +109,6 @@ import 'firebase/firestore'
               this.signedIn = false;
               this.superSignedIn = false;
            }
-           console.log(this.signedIn, this.superSignedIn);
         })
       },
       signIn: function(){

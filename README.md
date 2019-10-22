@@ -1,29 +1,25 @@
-# dssdad
+# ePortfolio
 
-## Project setup
+## Instalación dos módulos de Node js
 ```
 npm install
 ```
+Tamén tes que vincular o proxecto con Firebase cambiando a configuración en main.js.
 
-### Compiles and hot-reloads for development
+### Montar un servidor de desenvolvemento
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Facer compilación
 ```
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Feito con
+- [Vue.js](https://github.com/vuejs/vue)
+- [Vue-router](https://github.com/vuejs/vue-router)
+- [Vuetify](https://github.com/vuetifyjs/vuetify)
+- [Vue Monaco](https://github.com/egoist/vue-monaco)
+- [Moment](https://github.com/moment/moment/)
+- [Firebase](https://github.com/firebase/firebaseui-web)

@@ -42,7 +42,7 @@ export default {
     },
     data(){
         return {
-            titulo: '', contido: '<p>Hola</p>', tipo: 'Tarefa', trimestre: 1, tecnologia: '', password: '',
+            titulo: '', contido: '<p>Ola, escribe aquí HTML.</p>', tipo: 'Tarefa', trimestre: 1, tecnologia: '', password: '',
             options: {
                 language: 'html',
                 theme: 'vs-dark'
