@@ -91,23 +91,23 @@ import 'firebase/firestore'
       this.$vuetify.theme.dark = true;
     },
     mounted(){
-      this.checkSignIn();
       this.getSuperEmails();
+      this.checkSignIn();
     },
     methods:{
       checkSignIn: function(){
         firebase.auth().onAuthStateChanged((user) => {
            if(user){
              this.signedIn = true;
+             if(this.superEmails.includes(user.email)){
+              this.superSignedIn = true;
+             }else{
+               this.superSignedIn = false;
+             }
+           }
+           else{
+             this.signedIn = false;
              this.superSignedIn = false;
-           }
-           else if(user && this.superEmails.includes(user.email)) {
-             this.signedIn = true;
-             this.superSignedIn = true;
-           }
-           else {
-              this.signedIn = false;
-              this.superSignedIn = false;
            }
         })
       },
@@ -122,7 +122,7 @@ import 'firebase/firestore'
         firebase.auth().signOut();
       },
       getSuperEmails(){
-        firebase.firestore().collection('admins').onSnapshot((collection) => {
+        firebase.firestore().collection('admins').get().then((collection) => {
           collection.forEach((doc) => {
             this.superEmails.push(doc.data().email);
           })
