@@ -63,7 +63,7 @@ export default {
             this.$router.back();
         },
         unminify: function unminify(code) {
-            return code.split('<').join('\n<').replace('\n</', '</').slice(1);
+            return code.split('<').join('\n<').replace('\n</', '</').replace(' target="_blank"', '').slice(1);
         },
         processContent: function(content) {
             return content.split('<a ').join('<a target="_blank" ').replace(/(\r\n|\n|\r)/gm, "").replace("http://", "https://");
