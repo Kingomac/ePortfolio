@@ -92,9 +92,17 @@ import 'firebase/firestore'
     },
     mounted(){
       this.getSuperEmails();
-      this.checkSignIn();
     },
     methods:{
+      checkStartUser: function(){
+        if(firebase.auth().currentUser){
+          this.signedIn = true;
+          if(this.superEmails.includes(firebase.auth().currentUser.email)){
+            this.superSignedIn = true;
+          }
+        }
+        
+      },
       checkSignIn: function(){
         firebase.auth().onAuthStateChanged((user) => {
            if(user){
@@ -126,6 +134,9 @@ import 'firebase/firestore'
           collection.forEach((doc) => {
             this.superEmails.push(doc.data().email);
           })
+        }).then(() => {
+          this.checkStartUser();
+          this.checkSignIn();
         })
       }
     }
