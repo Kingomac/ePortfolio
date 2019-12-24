@@ -13,6 +13,9 @@
         <v-col>
             <h2>2º Trimestre</h2>
             <v-list>
+              <v-list-item to="/proxectos/animequiz">
+                <v-list-item-title>App: Anime Quiz</v-list-item-title>
+              </v-list-item>
             <linktarefa v-for="p in proxectos2" :to="'/proxectos/2/' + p.id" :key="p.id" :text="p.titulo"/>
             </v-list>
         </v-col>

@@ -52,6 +52,10 @@ export default new Router({
       name: 'sobre',
       component: () =>
         import ('./views/Sobre.vue')
+    },
+    {
+      path: '/proxectos/animequiz',
+      component: () => import('./views/projects/AnimeQuiz.vue')
     }
   ]
 })
