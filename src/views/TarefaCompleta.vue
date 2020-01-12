@@ -1,5 +1,5 @@
 <template>
-<div>
+<v-container>
 <v-row>
 <v-col cols="8"><h1>{{title}}</h1></v-col>
 <v-col cols="2"><v-btn class="me-2" color="error" v-if="superSignedIn" @click="eliminar()">Eliminar</v-btn></v-col>
@@ -10,14 +10,14 @@
     <v-col cols="12" md="6"><escribir-comentario v-if="signedIn"/></v-col>
     <v-col cols="12" md="6"><comentarios :tarefa="this.$route.params.id"/></v-col>
 </v-row>
-</div>
+</v-container>
 </template>
 <style>
 img{
   max-width: 100%;
   height: auto;
 }
-p{
+p, li{
     text-align: justify;
 }
 </style>

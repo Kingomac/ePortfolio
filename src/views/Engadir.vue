@@ -24,9 +24,11 @@
         required
         label="Titulo"/>
         <MonacoEditor style="height: 500px" v-model="contido" :options="options"/>
-        <v-btn class="mr-4 success" @click="submit">Engadir</v-btn>
-
+        <v-btn block class="ma-4 success" @click="submit">Engadir</v-btn>
     </form>
+    <h2>Vista previa</h2>
+    <v-container v-html="contido">
+    </v-container>
 </v-content>
 </v-container>
 </template>
@@ -42,11 +44,10 @@ export default {
     },
     data(){
         return {
-            titulo: '', contido: '<p>Ola, escribe aquí HTML.</p>', tipo: 'Tarefa', trimestre: 1, tecnologia: '', password: '',
-            options: {
-                language: 'html',
-                theme: 'vs-dark'
-            }
+          titulo: '', 
+          contido: '<p>Ola, escribe aquí HTML.</p>', 
+          tipo: 'Tarefa',
+          trimestre: 1
         }
     },
     methods: {
@@ -54,7 +55,7 @@ export default {
             let timestamp = firebase.firestore.FieldValue.serverTimestamp();
             const data = {
                 titulo: this.titulo,
-                contido: this.processContent(this.contido),
+                contido: this.contido,
                 creacion: timestamp
             }
             firebase.firestore().collection(this.collection).doc().set(data);
@@ -80,6 +81,18 @@ export default {
                 else return 'proxectos3';
                 break;
                 default: return 'error';
+            }
+        },
+        options: function(){
+        if(this.$vuetify.theme.dark){
+            return {
+            language: 'html',
+            theme: 'vs-dark'
+            }
+        }
+        else return {
+            language: 'html',
+            theme: 'vs-light'
             }
         }
     },

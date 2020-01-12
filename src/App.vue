@@ -1,10 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      clipped
-    >
+    <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
         <v-list-item to="/">
           <v-list-item-content>
@@ -34,11 +30,13 @@
         <v-list-item v-if="!signedIn" @click="signIn">
           <v-list-item-content>
             <v-list-item-title>
-              <v-img alt="google" src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png" width="18px" style="display:inline-block"/> Iniciar sesión
+              <v-img alt="google"
+                src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png"
+                width="18px" style="display:inline-block" /> Iniciar sesión
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-          <v-list-item v-if="signedIn" @click="logOut">
+        <v-list-item v-if="signedIn" @click="logOut">
           <v-list-item-content>
             <v-list-item-title>
               Cerrar sesión
@@ -48,25 +46,20 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar
-      app
-      clipped-left
-    >
+    <v-app-bar app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>ePortfolio de Mario</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon @click="changeTheme">
+        <v-icon v-if="$vuetify.theme.dark">brightness_low</v-icon>
+        <v-icon v-else>brightness_3</v-icon>
+        </v-btn>
     </v-app-bar>
-
     <v-content>
-        <v-container
-          justify="center"
-          class="p-2"
-          fluid
-        >
+      <v-container justify="center" class="p-2" fluid>
         <router-view :superSignedIn="superSignedIn" :signedIn="signedIn" />
-        </v-container>
-      
+      </v-container>
     </v-content>
-
     <v-footer app>
       <span>&copy; 2019</span>
     </v-footer>
@@ -74,9 +67,9 @@
 </template>
 
 <script>
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firestore'
+  import firebase from 'firebase/app'
+  import 'firebase/auth'
+  import 'firebase/firestore'
   export default {
     props: {
       source: String,
@@ -87,49 +80,47 @@ import 'firebase/firestore'
       superSignedIn: false,
       superEmails: []
     }),
-    created () {
+    created() {
       this.$vuetify.theme.dark = true;
     },
-    mounted(){
+    mounted() {
       this.getSuperEmails();
     },
-    methods:{
-      checkStartUser: function(){
-        if(firebase.auth().currentUser){
+    methods: {
+      checkStartUser: function () {
+        if (firebase.auth().currentUser) {
           this.signedIn = true;
-          if(this.superEmails.includes(firebase.auth().currentUser.email)){
+          if (this.superEmails.includes(firebase.auth().currentUser.email)) {
             this.superSignedIn = true;
           }
         }
-        
       },
-      checkSignIn: function(){
+      checkSignIn: function () {
         firebase.auth().onAuthStateChanged((user) => {
-           if(user){
-             this.signedIn = true;
-             if(this.superEmails.includes(user.email)){
+          if (user) {
+            this.signedIn = true;
+            if (this.superEmails.includes(user.email)) {
               this.superSignedIn = true;
-             }else{
-               this.superSignedIn = false;
-             }
-           }
-           else{
-             this.signedIn = false;
-             this.superSignedIn = false;
-           }
+            } else {
+              this.superSignedIn = false;
+            }
+          } else {
+            this.signedIn = false;
+            this.superSignedIn = false;
+          }
         })
       },
-      signIn: function(){
+      signIn: function () {
         firebase.auth().signOut();
         let provider = new firebase.auth.GoogleAuthProvider();
         provider.addScope('profile');
         firebase.auth().signInWithPopup(provider);
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
       },
-      logOut: function(){
+      logOut: function () {
         firebase.auth().signOut();
       },
-      getSuperEmails(){
+      getSuperEmails() {
         firebase.firestore().collection('admins').get().then((collection) => {
           collection.forEach((doc) => {
             this.superEmails.push(doc.data().email);
@@ -138,6 +129,9 @@ import 'firebase/firestore'
           this.checkStartUser();
           this.checkSignIn();
         })
+      },
+      changeTheme: function(){
+        this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
       }
     }
   }

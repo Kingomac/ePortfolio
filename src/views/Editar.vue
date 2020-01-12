@@ -25,7 +25,9 @@
         <MonacoEditor style="height: 500px" v-model="contido" :options="options"/>
         <v-btn class="mr-4 success" @click="save">Actualizar</v-btn>
     </form>
-
+    <h2>Vista previa</h2>
+    <v-container v-html="contido">
+    </v-container>
     </v-content>
 </v-container>
 </template>
@@ -42,7 +44,7 @@ export default {
         intialize: function(){
             firebase.firestore().collection(this.collection).doc(this.id).get().then((resp) => {
                 this.titulo = resp.data().titulo;
-                this.contido = this.unminify(resp.data().contido);
+                this.contido = resp.data().contido;
                 this.creacion = resp.data().creacion;
             });
             if(this.collection.includes('tarefa')) this.tipo = 'Tarefa';
@@ -55,7 +57,7 @@ export default {
             let timestamp = firebase.firestore.FieldValue.serverTimestamp();
             const data = {
                 titulo: this.titulo,
-                contido: this.processContent(this.contido),
+                contido: this.contido,
                 creacion: this.creacion,
                 actualizacion: timestamp
             }

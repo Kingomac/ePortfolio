@@ -19,10 +19,20 @@ export default {
   data(){
     return{
       code: '<div class="display-1">Novidades!</div><p>Agora podes ver o código do proxecto en <a target="_blank" href="https://github.com/Kingomac/ePortfolio">Github</a>.</p><p>Solucionado un erro coa presentación do contido en pantallas pequenas.</p>',
-      options: {
+    }
+  },
+  computed: {
+    options: function(){
+      if(this.$vuetify.theme.dark){
+        return {
         language: 'html',
         theme: 'vs-dark'
+        }
       }
+      else return {
+        language: 'html',
+        theme: 'vs-light'
+        }
     }
   }
 }
