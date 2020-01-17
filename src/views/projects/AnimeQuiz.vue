@@ -6,7 +6,7 @@
     <v-row justify="center">
       <v-col>
         <p class="text-justify">
-        Esta app, feita con MIT App Inventor, consiste nun xogo de preguntas no que tes que adiviñar a canción que está a soar. Hai certa variedade nas preguntas, pero todas xiran arredor do mesmo, as cancións dos animes (series de animación xaponesas) preguntando a que serie pertence, o nome dalgún personaxe ou o grupo que as canta.
+        <a href="http://ai2.appinventor.mit.edu/?galleryId=6031644886171648" target="_blank">Descargar App</a> Esta app, feita con MIT App Inventor, consiste nun xogo de preguntas no que tes que adiviñar a canción que está a soar. Hai certa variedade nas preguntas, pero todas xiran arredor do mesmo, as cancións dos animes (series de animación xaponesas) preguntando a que serie pertence, o nome dalgún personaxe ou o grupo que as canta.
         </p>
         <p class="text-justify">
           A app está composta por catro pantallas, a principal, a de descarga das cancións, a da puntuación e tres para os niveles. A pantalla principal serve para seleccionar o nivel ao que queres xogar e ao iniciar a pantalla comproba se as cancións están descargadas e no caso de que non estén descargadas abre a pantalla de descarga de cancións.

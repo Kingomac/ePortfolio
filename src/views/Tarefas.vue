@@ -43,38 +43,26 @@
             }
         },
         methods: {
-            resetTarefas: function(collection) {
-                switch (collection) {
-                    case 'tarefas':
-                        this.tarefas = [];
-                        break;
-                    case 'tarefas2':
-                        this.tarefas2 = [];
-                        break;
-                    case 'tarefas3':
-                        this.tarefas3 = [];
-                        break;
-                }
-            },
             setSnapshot: function(collection) {
                 let array = [];
                 firebase.firestore().collection(collection).orderBy('creacion').onSnapshot((snapshot) => {
                     snapshot.forEach((doc) => {
-                    let data = {
-                        title: doc.data().titulo,
-                        id: doc.id
-                    }
-                    let canSubmit = true;
-                    array.forEach((item) => {
-                        if(item.id == doc.id){
-                            canSubmit = false;
+                        let data = {
+                            title: doc.data().titulo,
+                            id: doc.id
                         }
+                        let canSubmit = true;
+                        array.forEach((item) => {
+                            if(item.id == doc.id){
+                                canSubmit = false;
+                            }
+                        })
+                        if(canSubmit) array.push(data);
                     })
-                    if(canSubmit) array.push(data);
                 })
-            })
-        return array;
-      }
+                this.$store.commit('setTarefas', [this.tarefas,this.tarefas2, this.tarefas3])
+                return array;
+            }
         },
         created(){
             this.tarefas = this.setSnapshot('tarefas');

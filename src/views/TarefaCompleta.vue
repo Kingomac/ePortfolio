@@ -1,69 +1,136 @@
 <template>
-<v-container>
-<v-row>
-<v-col cols="8"><h1>{{title}}</h1></v-col>
-<v-col cols="2"><v-btn class="me-2" color="error" v-if="superSignedIn" @click="eliminar()">Eliminar</v-btn></v-col>
-<v-col cols="2"><v-btn class="me-2" v-if="superSignedIn" :to="'/editar/' + trimestre + '/' + this.$route.params.id" color="success">Editar</v-btn></v-col>
-</v-row>
-<div v-html="content"></div>
-<v-row>
-    <v-col cols="12" md="6"><escribir-comentario v-if="signedIn"/></v-col>
-    <v-col cols="12" md="6"><comentarios :tarefa="this.$route.params.id"/></v-col>
-</v-row>
-</v-container>
+    <v-container>
+        <v-row align="center">
+            <h1 class="mr-3">{{title}}</h1>
+            <v-btn @click="cdTarefa(-1)" icon>
+                <v-icon>navigate_before</v-icon>
+            </v-btn>
+            <v-btn @click="cdTarefa(1)" icon>
+                <v-icon>navigate_next</v-icon>
+            </v-btn>
+            <v-btn icon v-if="superSignedIn" color="success" :to="'/editar/' + trimestre + '/' + this.$route.params.id">
+                <v-icon>edit</v-icon>
+            </v-btn>
+            <v-dialog v-model="dialog" persistent max-width="290">
+                <template v-slot:activator="{ on }">
+                    <v-btn v-on="on" icon color="error" v-if="superSignedIn">
+                        <v-icon>delete_outline</v-icon>
+                    </v-btn>
+                </template>
+                <v-card>
+                    <v-card-title class="headline">Queres borrar isto?</v-card-title>
+                    <v-card-text>Confirma se queres eliminar completamente esta tarefa, mírao ben porque senón vaise ó
+                        carallo.</v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="red darken-1" text @click="dialog = false">COMO!?!?!?!?!?</v-btn>
+                        <v-btn color="green darken-1" :loading="btnEliminando" text @click="eliminar">Tira pa diante
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
+        </v-row>
+        <div class="mt-4" v-html="content"></div>
+        <v-row>
+            <v-col cols="12" md="6">
+                <escribir-comentario v-if="signedIn" />
+            </v-col>
+            <v-col cols="12" md="6">
+                <comentarios :tarefa="this.$route.params.id" />
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 <style>
-img{
-  max-width: 100%;
-  height: auto;
-}
-p, li{
-    text-align: justify;
-}
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    p,
+    li {
+        text-align: justify;
+    }
 </style>
 <script>
-import firebase from 'firebase/app'
-import 'firebase/firestore'
-import EscribirComentario from '../components/EscribirComentario.vue'
-import Comentarios from '../components/Comentarios.vue'
+    import firebase from 'firebase/app'
+    import 'firebase/firestore'
+    import EscribirComentario from '../components/EscribirComentario.vue'
+    import Comentarios from '../components/Comentarios.vue'
 
-export default {
-    components: {
-        EscribirComentario,
-        Comentarios
-    },
-    methods:{
-        activateSnapshot: function(){
-            firebase.firestore().collection(this.trimestre).doc(this.$route.params.id).onSnapshot((snapshot) => {
-                this.title = snapshot.data().titulo;
-                this.content = snapshot.data().contido;
-            })
+    export default {
+        components: {
+            EscribirComentario,
+            Comentarios
         },
-        eliminar: function(){
-            let conf = confirm('¿Estás seguro de querer eliminar esto?')
-            if(conf) firebase.firestore().collection(this.trimestre).doc(this.$route.params.id).delete();
-            this.$router.push({ name: 'tarefas' });
-        }
-    },
-    computed:{
-        trimestre(){
-            switch(this.$route.params.trimestre){
-                case '1': return 'tarefas';
-                break;
-                case '2': return 'tarefas2';
-                break;
-                case '3': return 'tarefas3';
-                break;
-                default: return 'tarefas';
+        methods: {
+            activateSnapshot: function () {
+                firebase.firestore().collection(this.trimestre).doc(this.$route.params.id).onSnapshot((
+                    snapshot) => {
+                    this.title = snapshot.data().titulo;
+                    this.content = snapshot.data().contido;
+                })
+            },
+            eliminar: function () {
+                this.btnEliminando = true;
+                firebase.firestore().collection(this.trimestre).doc(this.$route.params.id).delete().then(() => {
+                    this.$router.push({
+                        name: 'tarefas'
+                    });
+                });
+            },
+            cdTarefa: function (sumar) {
+                let tarefas = this.$store.state.tarefas[parseInt(this.trimestre.replace('tarefas', '')) - 1 || 0];
+                if (typeof tarefas == "undefined") {
+                    firebase.firestore().collection(this.trimestre).get().then((res) => {
+                        tarefas = res;
+                    })
+                }
+                let index = 0;
+                tarefas.forEach((item, i) => {
+                    if (item.title == this.title) index = i;
+                })
+                let path =
+                    `/tarefas/${parseInt(this.trimestre.replace('tarefas', '')) || 1}/${tarefas[index+sumar].id}`;
+                this.$router.push({
+                    path
+                })
+            }
+        },
+        computed: {
+            trimestre() {
+                switch (this.$route.params.trimestre) {
+                    case '1':
+                        return 'tarefas';
+                        break;
+                    case '2':
+                        return 'tarefas2';
+                        break;
+                    case '3':
+                        return 'tarefas3';
+                        break;
+                    default:
+                        return 'tarefas';
+                }
+            }
+        },
+        data() {
+            return {
+                title: '',
+                content: '',
+                dialog: false,
+                btnEliminando: false
+            }
+        },
+        props: ['signedIn', 'superSignedIn', 'tarefas'],
+        created() {
+            this.activateSnapshot();
+        },
+        watch: {
+            '$route.path': function () {
+                this.activateSnapshot();
             }
         }
-    },
-    data(){
-        return { title: '', content: ''}
-    },
-    props: ['signedIn', 'superSignedIn'],
-    created(){
-        this.activateSnapshot();
     }
-}
 </script>
