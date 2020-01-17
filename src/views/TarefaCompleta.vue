@@ -11,9 +11,9 @@
             <v-btn icon v-if="superSignedIn" color="success" :to="'/editar/' + trimestre + '/' + this.$route.params.id">
                 <v-icon>edit</v-icon>
             </v-btn>
-            <v-dialog v-model="dialog" persistent max-width="290">
+            <v-dialog v-if="superSignedIn" v-model="dialog" persistent max-width="290">
                 <template v-slot:activator="{ on }">
-                    <v-btn v-on="on" icon color="error" v-if="superSignedIn">
+                    <v-btn v-on="on" icon color="error">
                         <v-icon>delete_outline</v-icon>
                     </v-btn>
                 </template>
@@ -81,22 +81,57 @@
                 });
             },
             cdTarefa: function (sumar) {
-                let tarefas = this.$store.state.tarefas[parseInt(this.trimestre.replace('tarefas', '')) - 1 || 0];
-                if (typeof tarefas == "undefined") {
-                    firebase.firestore().collection(this.trimestre).get().then((res) => {
-                        tarefas = res;
+                try {
+                    let tarefas = this.$store.state.tarefas[parseInt(this.trimestre.replace('tarefas', '')) - 1 ||
+                        0];
+                    let index = 0;
+                    tarefas.forEach((item, i) => {
+                        if (item.title == this.title) index = i;
                     })
+                    let path =
+                        `/tarefas/${parseInt(this.trimestre.replace('tarefas', '')) || 1}/${tarefas[index+sumar].id}`;
+                    this.$router.push({
+                        path
+                    })
+                } catch (e) {
+                firebase.firestore().collection(this.trimestre).orderBy('creacion').get().then((res) => {
+                    let tarefas = [];
+                    let index = 0;
+                    let i = 0;
+                    res.forEach((item) => {
+                        if (item.data().titulo == this.title) {
+                            index = i;
+                        }
+                        let data = item.data();
+                        Object.assign(data, {id: item.id});
+                        tarefas.push(data);
+                        i++;
+                    })
+                    if(this.trimestre == 'tarefas'){
+                        this.$store.commit('setTarefas', [tarefas, this.$store.state.tarefas[1], this.$store.state.tarefas[2]]);
+                    }
+                    else if(this.trimestre == 'tarefas2'){
+                        this.$store.commit('setTarefas', [this.$store.state.tarefas[0], tarefas, this.$store.state.tarefas[2]]);
+                    }
+                    else{
+                        this.$store.commit('setTarefas', [this.$store.state.tarefas[0], this.$store.state.tarefas[1], tarefas]);
+                    }
+                    i = 0;
+                    res.forEach((item) => {
+                        if (i == index + sumar) {
+                            let path =
+                                `/tarefas/${parseInt(this.trimestre.replace('tarefas', '')) || 1}/${item.id}`;
+                            this.$router.push({
+                                path
+                            })
+                        }
+                        i++;
+                    })
+
+                })
                 }
-                let index = 0;
-                tarefas.forEach((item, i) => {
-                    if (item.title == this.title) index = i;
-                })
-                let path =
-                    `/tarefas/${parseInt(this.trimestre.replace('tarefas', '')) || 1}/${tarefas[index+sumar].id}`;
-                this.$router.push({
-                    path
-                })
             }
+
         },
         computed: {
             trimestre() {
