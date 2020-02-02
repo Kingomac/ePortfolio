@@ -20,20 +20,10 @@ export default {
   data(){
     return{
       code: '<div class="display-1">Novidades!</div>\n<ul>\n<li>Enlace ao proxecto Anime Quiz, que superou as 10 descargas.</li>\n<li>Botóns para navegar entre as tarefas</li>\n<li>Actualización de dependencias</li>\n</ul>',
-    }
-  },
-  computed: {
-    options: function(){
-      if(this.$vuetify.theme.dark){
-        return {
+      options:{
         language: 'html',
         theme: 'vs-dark'
-        }
       }
-      else return {
-        language: 'html',
-        theme: 'vs-light'
-        }
     }
   }
 }

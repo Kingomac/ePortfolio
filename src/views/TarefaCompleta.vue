@@ -81,19 +81,24 @@
                 });
             },
             cdTarefa: function (sumar) {
-                try {
-                    let tarefas = this.$store.state.tarefas[parseInt(this.trimestre.replace('tarefas', '')) - 1 ||
-                        0];
+                if(this.$store.state.tarefas[this.$route.params.trimestre -1].length > 0) {
+                    let tarefas = this.$store.state.tarefas[this.$route.params.trimestre -1];
                     let index = 0;
                     tarefas.forEach((item, i) => {
-                        if (item.title == this.title) index = i;
+                        if (item.title == this.title) {
+                            index = i;
+                        }
                     })
-                    let path =
-                        `/tarefas/${parseInt(this.trimestre.replace('tarefas', '')) || 1}/${tarefas[index+sumar].id}`;
+                    if(typeof tarefas[index+sumar] !== 'undefined'){
+                        let path =
+                        `/tarefas/${this.$route.params.trimestre}/${tarefas[index+sumar].id}`;
                     this.$router.push({
                         path
                     })
-                } catch (e) {
+                    this.activateSnapshot();
+                    }
+                    
+                } else{
                 firebase.firestore().collection(this.trimestre).orderBy('creacion').get().then((res) => {
                     let tarefas = [];
                     let index = 0;
@@ -120,10 +125,11 @@
                     res.forEach((item) => {
                         if (i == index + sumar) {
                             let path =
-                                `/tarefas/${parseInt(this.trimestre.replace('tarefas', '')) || 1}/${item.id}`;
+                                `/tarefas/${this.$route.params.trimestre}/${item.id}`;
                             this.$router.push({
                                 path
                             })
+                            this.activateSnapshot();
                         }
                         i++;
                     })
@@ -161,11 +167,6 @@
         props: ['signedIn', 'superSignedIn', 'tarefas'],
         created() {
             this.activateSnapshot();
-        },
-        watch: {
-            '$route.path': function () {
-                this.activateSnapshot();
-            }
         }
     }
 </script>

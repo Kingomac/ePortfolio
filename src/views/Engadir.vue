@@ -23,8 +23,8 @@
         v-model="titulo"
         required
         label="Titulo"/>
-        <MonacoEditor style="height: 500px" v-model="contido" :options="options"/>
-        <v-btn block class="ma-4 success" @click="submit">Engadir</v-btn>
+        <div style="width:100%;height:600px;"><MonacoEditor style="width:100%;height:100%;overflow:auto;" v-model="contido" :options="options"/></div>
+        <v-btn block class="ma-8 success" @click="submit">Engadir</v-btn>
     </form>
     <h2>Vista previa</h2>
     <v-container v-html="contido">
@@ -47,7 +47,11 @@ export default {
           titulo: '', 
           contido: '<p>Ola, escribe aquí HTML.</p>', 
           tipo: 'Tarefa',
-          trimestre: 1
+          trimestre: 1,
+          options:{
+            language: 'html',
+            theme: 'vs-dark'
+          }
         }
     },
     methods: {
@@ -81,18 +85,6 @@ export default {
                 else return 'proxectos3';
                 break;
                 default: return 'error';
-            }
-        },
-        options: function(){
-        if(this.$vuetify.theme.dark){
-            return {
-            language: 'html',
-            theme: 'vs-dark'
-            }
-        }
-        else return {
-            language: 'html',
-            theme: 'vs-light'
             }
         }
     },
