@@ -56,6 +56,10 @@ export default new Router({
     {
       path: '/proxectos/animequiz',
       component: () => import('./views/projects/AnimeQuiz.vue')
+    },
+    {
+      path: '/proxectos/paxina-con-wix',
+      component: () => import('./views/projects/WixPage.vue')
     }
   ]
 })

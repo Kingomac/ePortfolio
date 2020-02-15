@@ -1,10 +1,33 @@
 <template>
 <div>
-<h1>{{proxecto.titulo}}</h1>
+    <v-row>
+<v-col><h1>{{proxecto.titulo}}</h1></v-col>
+<v-col>
 <v-row v-if="superSignedIn">
-    <v-col cols="2"><v-btn class="me-2" color="error" v-if="superSignedIn" @click="eliminar()">Eliminar</v-btn></v-col>
-<v-col cols="2"><v-btn class="me-2" v-if="superSignedIn" :to="'/editar/' + collection + '/' + this.$route.params.id" color="success">Editar</v-btn></v-col>
+    <v-btn icon v-if="superSignedIn" color="success" :to="'/editar/' + collection + '/' + this.$route.params.id">
+                <v-icon>edit</v-icon>
+            </v-btn>
+            <v-dialog v-if="superSignedIn" v-model="dialog" persistent max-width="290">
+                <template v-slot:activator="{ on }">
+                    <v-btn v-on="on" icon color="error">
+                        <v-icon>delete_outline</v-icon>
+                    </v-btn>
+                </template>
+                <v-card>
+                    <v-card-title class="headline">Queres borrar isto?</v-card-title>
+                    <v-card-text>Confirma se queres eliminar completamente este proxecto, mírao ben porque senón vaise ó
+                        carallo.</v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="red darken-1" text @click="dialog = false">COMO!?!?!?!?!?</v-btn>
+                        <v-btn color="green darken-1" :loading="btnEliminando" text @click="eliminar">Tira pa diante
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
 </v-row>
+</v-col>
+    </v-row>
 <div v-html="proxecto.contido"></div>
 </div>
 </template>
@@ -24,7 +47,9 @@ export default {
     data(){
         return {
             proxecto: {},
-            collection: 'proxectos'
+            collection: 'proxectos',
+            btnEliminando: false,
+            dialog: false
         }
     },
     methods: {
