@@ -5,19 +5,19 @@
         <v-row justify="center">
         <v-col>
             <h2>1º Trimestre</h2>
-            <v-list color="list">
+            <v-list>
             <linktarefa v-for="t in tarefas" :to="'/tarefas/1/' + t.id" :key="t.id" :text="t.title"/>
             </v-list>
         </v-col>
         <v-col>
             <h2>2º Trimestre</h2>
-            <v-list color="list">
+            <v-list>
             <linktarefa v-for="t in tarefas2" :to="'/tarefas/2/' + t.id" :key="t.id" :text="t.title"/>
             </v-list>
         </v-col>
         <v-col>
             <h2>3º Trimestre</h2>
-            <v-list color="list">
+            <v-list>
             <linktarefa v-for="t in tarefas3" :to="'/tarefas/3/' + t.id" :key="t.id" :text="t.title"/>
             </v-list>
         </v-col>

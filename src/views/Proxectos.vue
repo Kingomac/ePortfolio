@@ -5,13 +5,13 @@
         <v-row justify="center">
         <v-col>
             <h2>1º Trimestre</h2>
-            <v-list color="list">
+            <v-list>
             <linktarefa v-for="p in proxectos" :to="'/proxectos/1/' + p.id" :key="p.id" :text="p.titulo"/>
             </v-list>
         </v-col>
         <v-col>
             <h2>2º Trimestre</h2>
-            <v-list color="list">
+            <v-list>
               <v-list-item to="/proxectos/animequiz">
                 <v-list-item-title>App: Anime Quiz</v-list-item-title>
               </v-list-item>
@@ -23,7 +23,7 @@
         </v-col>
         <v-col>
             <h2>3º Trimestre</h2>
-            <v-list color="list">
+            <v-list>
             <linktarefa v-for="p in proxectos3" :to="'/proxectos/3/' + p.id" :key="p.id" :text="p.titulo"/>
             </v-list>
         </v-col>

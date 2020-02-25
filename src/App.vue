@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer color="primary" v-model="drawer" app clipped>
+    <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
         <v-list-item to="/">
           <v-list-item-content>
@@ -46,12 +46,12 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="primary" app clipped-left>
+    <v-app-bar app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>ePortfolio de Mario</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
-    <v-content :style="'background-color:' + $vuetify.theme.currentTheme.secondary">
+    <v-content>
       <v-container justify="center" class="p-2" fluid>
         <router-view :superSignedIn="superSignedIn" :signedIn="signedIn" />
       </v-container>
@@ -130,7 +130,13 @@
   }
 </script>
 <style>
-a{
-  color: white !important;
+.v-content{
+  background-color: #2b2b2b !important;
+}
+.v-list{
+  background: #404040 !important;
+}
+a:not(.v-list-item--active):not(.v-btn){
+  color: #1c8eff !important;
 }
 </style>
