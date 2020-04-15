@@ -1,14 +1,14 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state:{
-    tarefas: [[],[],[]]
+  state: {
+    tarefas: [[], [], []]
   },
   mutations: {
-    setTarefas(state, tarefas){
+    setTarefas(state, tarefas) {
       state.tarefas[tarefas.id] = tarefas.tarefas;
     }
   }

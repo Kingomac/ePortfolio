@@ -1,11 +1,11 @@
 <template>
-<v-list-item :to="to">
-<v-list-item-title>{{text}}</v-list-item-title>
-</v-list-item>
+  <v-list-item :to="to">
+    <v-list-item-title>{{ text }}</v-list-item-title>
+  </v-list-item>
 </template>
 <script>
 export default {
-    name: 'linktarefa',
-    props: ['to', 'text']
-}
+  name: "linktarefa",
+  props: ["to", "text"]
+};
 </script>
