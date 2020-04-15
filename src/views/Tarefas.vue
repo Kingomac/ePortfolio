@@ -60,7 +60,6 @@
                         if(canSubmit) array.push(data);
                     })
                 })
-                this.$store.commit('setTarefas', [this.tarefas,this.tarefas2, this.tarefas3])
                 return array;
             }
         },

@@ -54,119 +54,84 @@
     }
 </style>
 <script>
-    import firebase from 'firebase/app'
-    import 'firebase/firestore'
-    import EscribirComentario from '../components/EscribirComentario.vue'
-    import Comentarios from '../components/Comentarios.vue'
+import firebase, { firestore } from 'firebase/app'
+import 'firebase/firestore'
+import EscribirComentario from '../components/EscribirComentario.vue'
+import Comentarios from '../components/Comentarios.vue'
+import store from '../plugins/store'
 
-    export default {
-        components: {
-            EscribirComentario,
-            Comentarios
-        },
-        methods: {
-            activateSnapshot: function () {
-                firebase.firestore().collection(this.trimestre).doc(this.$route.params.id).onSnapshot((
-                    snapshot) => {
-                    this.title = snapshot.data().titulo;
-                    this.content = snapshot.data().contido;
-                })
-            },
-            eliminar: function () {
-                this.btnEliminando = true;
-                firebase.firestore().collection(this.trimestre).doc(this.$route.params.id).delete().then(() => {
-                    this.$router.push({
-                        name: 'tarefas'
-                    });
-                });
-            },
-            cdTarefa: function (sumar) {
-                if(this.$store.state.tarefas[this.$route.params.trimestre -1].length > 0) {
-                    let tarefas = this.$store.state.tarefas[this.$route.params.trimestre -1];
-                    let index = 0;
-                    tarefas.forEach((item, i) => {
-                        if (item.title == this.title) {
-                            index = i;
-                        }
-                    })
-                    if(typeof tarefas[index+sumar] !== 'undefined'){
-                        let path =
-                        `/tarefas/${this.$route.params.trimestre}/${tarefas[index+sumar].id}`;
-                    this.$router.push({
-                        path
-                    })
-                    this.activateSnapshot();
-                    }
-                    
-                } else{
-                firebase.firestore().collection(this.trimestre).orderBy('creacion').get().then((res) => {
-                    let tarefas = [];
-                    let index = 0;
-                    let i = 0;
-                    res.forEach((item) => {
-                        if (item.data().titulo == this.title) {
-                            index = i;
-                        }
-                        let data = item.data();
-                        Object.assign(data, {id: item.id});
-                        tarefas.push(data);
-                        i++;
-                    })
-                    if(this.trimestre == 'tarefas'){
-                        this.$store.commit('setTarefas', [tarefas, this.$store.state.tarefas[1], this.$store.state.tarefas[2]]);
-                    }
-                    else if(this.trimestre == 'tarefas2'){
-                        this.$store.commit('setTarefas', [this.$store.state.tarefas[0], tarefas, this.$store.state.tarefas[2]]);
-                    }
-                    else{
-                        this.$store.commit('setTarefas', [this.$store.state.tarefas[0], this.$store.state.tarefas[1], tarefas]);
-                    }
-                    i = 0;
-                    res.forEach((item) => {
-                        if (i == index + sumar) {
-                            let path =
-                                `/tarefas/${this.$route.params.trimestre}/${item.id}`;
-                            this.$router.push({
-                                path
-                            })
-                            this.activateSnapshot();
-                        }
-                        i++;
-                    })
-
-                })
-                }
-            }
-
-        },
-        computed: {
-            trimestre() {
-                switch (this.$route.params.trimestre) {
-                    case '1':
-                        return 'tarefas';
-                        break;
-                    case '2':
-                        return 'tarefas2';
-                        break;
-                    case '3':
-                        return 'tarefas3';
-                        break;
-                    default:
-                        return 'tarefas';
-                }
-            }
-        },
-        data() {
-            return {
-                title: '',
-                content: '',
-                dialog: false,
-                btnEliminando: false
-            }
-        },
-        props: ['signedIn', 'superSignedIn', 'tarefas'],
-        created() {
-            this.activateSnapshot();
+export default {
+  components: {
+    EscribirComentario,
+    Comentarios
+  },
+  methods: {
+      activateSnapshot: function () {
+          firebase.firestore().collection(this.trimestre).doc(this.$route.params.id).onSnapshot((
+              snapshot) => {
+              this.title = snapshot.data().titulo;
+              this.content = snapshot.data().contido;
+          })
+      },
+      eliminar: function () {
+          this.btnEliminando = true;
+          firebase.firestore().collection(this.trimestre).doc(this.$route.params.id).delete().then(() => {
+              this.$router.push({
+                  name: 'tarefas'
+              });
+          });
+      },
+      cdTarefa: function (sumar) {
+        this.go(store.state.tarefas);
+      },
+      go: function(tarefas){
+        if(tarefas[0][0] !== undefined){
+        this.$router.push({path: '/tarefas/' + this.$route.params.trimestre + '/' + tarefas[this.$route.params.trimestre-1][tarefas[this.$route.params.trimestre-1].indexOf(this.$route.params.id)+1]})
+        this.activateSnapshot();
         }
+      }
+
+  },
+  computed: {
+    trimestre() {
+      switch (this.$route.params.trimestre) {
+        case '1':
+            return 'tarefas';
+            break;
+        case '2':
+            return 'tarefas2';
+            break;
+        case '3':
+            return 'tarefas3';
+            break;
+        default:
+            return 'tarefas';
+      }
     }
+  },
+  data() {
+      return {
+          title: '',
+          content: '',
+          dialog: false,
+          btnEliminando: false
+      }
+  },
+  props: ['signedIn', 'superSignedIn', 'tarefas'],
+  created() {
+      this.activateSnapshot();
+      if(store.state.tarefas[0][0] == undefined){
+            let cols = ['tarefas', 'tarefas2', 'tarefas3']
+            cols.forEach((val, index) => {
+                firebase.firestore().collection(val).orderBy('creacion','asc').get().then((res) => {
+                    let tarefas = []
+                    res.forEach((doc) => {
+                        tarefas.push(doc.id);
+                    })
+                    store.commit('setTarefas', {id: index, tarefas})
+                })
+            })
+        }
+  }
+}
 </script>
