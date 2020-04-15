@@ -30,9 +30,13 @@
         <v-list-item v-if="!signedIn" @click="signIn">
           <v-list-item-content>
             <v-list-item-title>
-              <v-img alt="google"
+              <v-img
+                alt="google"
                 src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png"
-                width="18px" style="display:inline-block" /> Iniciar sesión
+                width="18px"
+                style="display:inline-block"
+              />
+              Iniciar sesión
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -63,80 +67,82 @@
 </template>
 
 <script>
-  import firebase from 'firebase/app'
-  import 'firebase/auth'
-  import 'firebase/firestore'
-  export default {
-    props: {
-      source: String,
-    },
-    data: () => ({
-      drawer: null,
-      signedIn: false,
-      superSignedIn: false,
-      superEmails: []
-    }),
-    created() {
-      this.$vuetify.theme.dark = true;
-    },
-    mounted() {
-      this.getSuperEmails();
-    },
-    methods: {
-      checkStartUser: function () {
-        if (firebase.auth().currentUser) {
-          this.signedIn = true;
-          if (this.superEmails.includes(firebase.auth().currentUser.email)) {
-            this.superSignedIn = true;
-          }
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+export default {
+  props: {
+    source: String
+  },
+  data: () => ({
+    drawer: null,
+    signedIn: false,
+    superSignedIn: false,
+    superEmails: []
+  }),
+  created() {
+    this.$vuetify.theme.dark = true;
+  },
+  mounted() {
+    this.getSuperEmails();
+  },
+  methods: {
+    checkStartUser: function() {
+      if (firebase.auth().currentUser) {
+        this.signedIn = true;
+        if (this.superEmails.includes(firebase.auth().currentUser.email)) {
+          this.superSignedIn = true;
         }
-      },
-      checkSignIn: function () {
-        firebase.auth().onAuthStateChanged((user) => {
-          if (user) {
-            this.signedIn = true;
-            if (this.superEmails.includes(user.email)) {
-              this.superSignedIn = true;
-            } else {
-              this.superSignedIn = false;
-            }
+      }
+    },
+    checkSignIn: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.signedIn = true;
+          if (this.superEmails.includes(user.email)) {
+            this.superSignedIn = true;
           } else {
-            this.signedIn = false;
             this.superSignedIn = false;
           }
-        })
-      },
-      signIn: function () {
-        firebase.auth().signOut();
-        let provider = new firebase.auth.GoogleAuthProvider();
-        provider.addScope('profile');
-        firebase.auth().signInWithPopup(provider);
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-      },
-      logOut: function () {
-        firebase.auth().signOut();
-      },
-      getSuperEmails() {
-        firebase.firestore().collection('admins').get().then((collection) => {
-          collection.forEach((doc) => {
+        } else {
+          this.signedIn = false;
+          this.superSignedIn = false;
+        }
+      });
+    },
+    signIn: function() {
+      firebase.auth().signOut();
+      let provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope("profile");
+      firebase.auth().signInWithPopup(provider);
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+    },
+    logOut: function() {
+      firebase.auth().signOut();
+    },
+    getSuperEmails() {
+      firebase
+        .firestore()
+        .collection("admins")
+        .get()
+        .then(collection => {
+          collection.forEach(doc => {
             this.superEmails.push(doc.data().email);
-          })
-        }).then(() => {
+          });
+        })
+        .then(() => {
           this.checkStartUser();
           this.checkSignIn();
-        })
-      }
+        });
     }
   }
+};
 </script>
 <style>
-.v-content{
+.v-content {
   background-color: #2b2b2b !important;
 }
-.v-list{
+.v-list:not(.v-list--dense) {
   background: #404040 !important;
-}
-a:not(.v-list-item--active):not(.v-btn){
-  color: #1c8eff !important;
 }
 </style>
