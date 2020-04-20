@@ -47,6 +47,10 @@ export default new Router({
       component: () => import("./views/Sobre.vue")
     },
     {
+      path: "/sobre-min",
+      component: () => import("./views/SobreMin.vue")
+    },
+    {
       path: "/proxectos/animequiz",
       component: () => import("./views/projects/AnimeQuiz.vue")
     },

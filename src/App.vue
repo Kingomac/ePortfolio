@@ -22,6 +22,9 @@
             <v-list-item-title>Sobre este ePortfolio</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item to="/sobre-min">
+          <v-list-item-title>Sobre min</v-list-item-title>
+        </v-list-item>
         <v-list-item v-if="superSignedIn" to="/engadir">
           <v-list-item-content>
             <v-list-item-title>Crear tarefa/proxecto</v-list-item-title>
@@ -61,7 +64,7 @@
       </v-container>
     </v-content>
     <v-footer app>
-      <span>&copy; 2019</span>
+      <span>&copy; 2020</span>
     </v-footer>
   </v-app>
 </template>
