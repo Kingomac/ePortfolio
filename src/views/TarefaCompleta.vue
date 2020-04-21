@@ -53,13 +53,14 @@
       <v-progress-circular indeterminate v-if="cargando" />
     </v-row>
     <div class="mt-4" v-if="!cargando" v-html="content"></div>
-    <v-row>
-      <v-col cols="12" md="6">
-        <escribir-comentario v-if="signedIn" />
-      </v-col>
-      <v-col cols="12" md="6">
-        <comentarios :tarefa="this.$route.params.id" />
-      </v-col>
+    <v-row justify="center">
+      <escribir-comentario v-if="signedIn" />
+    </v-row>
+    <v-row justify="center">
+      <login-com v-if="!signedIn" />
+    </v-row>
+    <v-row justify="center">
+      <comentarios :tarefa="this.$route.params.id" />
     </v-row>
   </v-container>
 </template>
@@ -80,11 +81,13 @@ import "firebase/firestore";
 import EscribirComentario from "../components/EscribirComentario.vue";
 import Comentarios from "../components/Comentarios.vue";
 import store from "../plugins/store";
+import LoginCom from "../components/LoginCom.vue";
 
 export default {
   components: {
     EscribirComentario,
-    Comentarios
+    Comentarios,
+    LoginCom
   },
   methods: {
     activateSnapshot: function() {

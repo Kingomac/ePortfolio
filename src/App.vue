@@ -117,8 +117,8 @@ export default {
       firebase.auth().signOut();
       let provider = new firebase.auth.GoogleAuthProvider();
       provider.addScope("profile");
-      firebase.auth().signInWithPopup(provider);
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+      firebase.auth().signInWithRedirect(provider);
+      firebase.auth().getRedirectResult();
     },
     logOut: function() {
       firebase.auth().signOut();

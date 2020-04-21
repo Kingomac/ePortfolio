@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <v-card
-      class="mx-auto mt-2"
-      v-for="com in comentarios"
-      v-bind:key="com.index"
-    >
-      <v-card-text>
-        <div>{{ com.creacion }}</div>
-        <p class="headline text--primary">
-          {{ com.usuario }}
-        </p>
-        <div class="text--primary">
-          {{ com.contenido }}
-        </div>
-      </v-card-text>
-    </v-card>
-  </div>
+  <v-row>
+    <v-col sm="12" md="3" v-for="com in comentarios" v-bind:key="com.index">
+      <v-card class="mx-auto">
+        <v-card-text>
+          <div>{{ com.creacion }}</div>
+          <p class="headline text--primary">
+            {{ com.usuario }}
+          </p>
+          <div class="text--primary">
+            {{ com.contenido }}
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 <script>
 import firebase from "firebase/app";

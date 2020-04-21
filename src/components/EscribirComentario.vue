@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-10">
+  <v-card class="my-2" width="50%">
     <v-card-title>
       <span class="headline">Escribir un comentario</span>
     </v-card-title>
