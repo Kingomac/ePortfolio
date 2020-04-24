@@ -70,20 +70,20 @@ export default {
       proxecto: {},
       collection: "proxectos",
       btnEliminando: false,
-      dialog: false
+      dialog: false,
     };
   },
   methods: {
-    setSnapshot: function(trimestre) {
+    setSnapshot: function (trimestre) {
       firebase
         .firestore()
         .collection(trimestre)
         .doc(this.$route.params.id)
-        .onSnapshot(snapshot => {
+        .onSnapshot((snapshot) => {
           this.proxecto = snapshot.data();
         });
     },
-    eliminar: function() {
+    eliminar: function () {
       let conf = confirm("¿Estás seguro de querer eliminar esto?");
       if (conf)
         firebase
@@ -92,7 +92,7 @@ export default {
           .doc(this.$route.params.id)
           .delete();
       this.$router.push({ name: "proxectos" });
-    }
+    },
   },
   created() {
     switch (this.$route.params.trimestre) {
@@ -108,6 +108,6 @@ export default {
     }
     this.setSnapshot(this.collection);
   },
-  props: ["superSignedIn"]
+  props: ["superSignedIn"],
 };
 </script>

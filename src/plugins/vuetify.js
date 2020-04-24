@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuetify from "vuetify/lib";
+import Vuetify from "vuetify/lib/framework";
 
 Vue.use(Vuetify);
 
@@ -7,28 +7,28 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: "#1976D2",
-        secondary: "#424242",
-        accent: "#82B1FF",
+        primary: "#1c4978",
+        secondary: "#6990b8",
+        accent: "#38fcd2",
         error: "#FF5252",
         info: "#2196F3",
         success: "#4CAF50",
         warning: "#FFC107",
-        list: "#e0f1ff"
+        list: "#6990b8",
       },
       dark: {
-        primary: "#318be4",
+        primary: "#4b94db",
         secondary: "#424242",
         accent: "#82B1FF",
         error: "#FF5252",
         info: "#2196F3",
         success: "#4CAF50",
         warning: "#FFC107",
-        list: "#e0f1ff"
-      }
-    }
+        list: "#363636",
+      },
+    },
   },
   icons: {
-    iconfont: "md"
-  }
+    iconfont: "md",
+  },
 });

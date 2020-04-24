@@ -1,0 +1,17 @@
+$list-item-dense-title-font-size: 0.729rem;
+$list-item-dense-title-font-weight: bold;
+$body-font-family: 'Arial';
+$btn-font-weight: bold;
+$material-dark: (
+  (
+    'background': #313131,
+    'bottom-navigation': #1e1e1e
+  )
+);
+$material-light: (
+  (
+    'app-bar': #1c4978,
+    'navigation-drawer': #6990b8,
+    'bottom-navigation': #6990b8,
+  )
+)

@@ -2,39 +2,26 @@
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
-        <v-list-item to="/">
-          <v-list-item-content>
-            <v-list-item-title>Inicio</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item to="/tarefas">
-          <v-list-item-content>
-            <v-list-item-title>Tarefas</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item to="/proxectos">
-          <v-list-item-content>
-            <v-list-item-title>Proxectos</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item to="/sobre-este-eportfolio">
-          <v-list-item-content>
-            <v-list-item-title>Sobre este ePortfolio</v-list-item-title>
-          </v-list-item-content>
+        <v-list-item v-for="n in navigation" :key="n.url" :to="n.url">
+          <v-list-item-title class="white--text">{{
+            n.text
+          }}</v-list-item-title>
         </v-list-item>
         <v-list-item v-if="superSignedIn" to="/engadir">
           <v-list-item-content>
-            <v-list-item-title>Crear tarefa/proxecto</v-list-item-title>
+            <v-list-item-title class="white--text"
+              >Crear tarefa/proxecto</v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
         <v-list-item v-if="!signedIn" @click="signIn">
           <v-list-item-content>
-            <v-list-item-title>
+            <v-list-item-title class="white--text">
               <v-img
                 alt="google"
                 src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png"
                 width="18px"
-                style="display:inline-block"
+                style="display: inline-block;"
               />
               Iniciar sesión
             </v-list-item-title>
@@ -42,7 +29,7 @@
         </v-list-item>
         <v-list-item v-if="signedIn" @click="logOut">
           <v-list-item-content>
-            <v-list-item-title>
+            <v-list-item-title class="white--text">
               Cerrar sesión
             </v-list-item-title>
           </v-list-item-content>
@@ -51,17 +38,28 @@
     </v-navigation-drawer>
 
     <v-app-bar app clipped-left>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>ePortfolio de Mario</v-toolbar-title>
+      <v-app-bar-nav-icon
+        class="white--text"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
+      <v-toolbar-title class="white--text">ePortfolio de Mario</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn icon @click="setTheme">
+        <v-icon class="white--text" v-if="$vuetify.theme.dark">wb_sunny</v-icon>
+        <v-icon class="white--text" v-else>brightness_3</v-icon>
+      </v-btn>
     </v-app-bar>
     <v-content>
       <v-container justify="center" class="p-2" fluid>
-        <router-view :superSignedIn="superSignedIn" :signedIn="signedIn" />
+        <router-view
+          :navigation="navigation"
+          :superSignedIn="superSignedIn"
+          :signedIn="signedIn"
+        />
       </v-container>
     </v-content>
     <v-footer app>
-      <span>&copy; 2019</span>
+      <span class="white--text">&copy; {{ getYear }}</span>
     </v-footer>
   </v-app>
 </template>
@@ -72,22 +70,59 @@ import "firebase/auth";
 import "firebase/firestore";
 export default {
   props: {
-    source: String
+    source: String,
   },
   data: () => ({
     drawer: null,
     signedIn: false,
     superSignedIn: false,
-    superEmails: []
+    superEmails: [],
+    navigation: [
+      {
+        text: "Inicio",
+        url: "/",
+      },
+      {
+        text: "Tarefas",
+        url: "/tarefas",
+      },
+      {
+        text: "Proxectos",
+        url: "/proxectos",
+      },
+      {
+        text: "Sobre este ePortfolio",
+        url: "/sobre-este-eportfolio",
+      },
+      {
+        text: "Sobre min",
+        url: "/sobre-min",
+      },
+    ],
   }),
-  created() {
-    this.$vuetify.theme.dark = true;
+  computed: {
+    getYear: function () {
+      let date = new Date(Date.now());
+      return date.getFullYear();
+    },
   },
   mounted() {
     this.getSuperEmails();
+    this.loadTheme();
   },
   methods: {
-    checkStartUser: function() {
+    setTheme: function () {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+      window.localStorage.setItem(
+        "darkTheme",
+        JSON.stringify(this.$vuetify.theme.dark)
+      );
+    },
+    loadTheme: function () {
+      let stored = window.localStorage.getItem("darkTheme");
+      this.$vuetify.theme.dark = JSON.parse(stored);
+    },
+    checkStartUser: function () {
       if (firebase.auth().currentUser) {
         this.signedIn = true;
         if (this.superEmails.includes(firebase.auth().currentUser.email)) {
@@ -95,8 +130,8 @@ export default {
         }
       }
     },
-    checkSignIn: function() {
-      firebase.auth().onAuthStateChanged(user => {
+    checkSignIn: function () {
+      firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           this.signedIn = true;
           if (this.superEmails.includes(user.email)) {
@@ -110,14 +145,14 @@ export default {
         }
       });
     },
-    signIn: function() {
+    signIn: function () {
       firebase.auth().signOut();
       let provider = new firebase.auth.GoogleAuthProvider();
       provider.addScope("profile");
-      firebase.auth().signInWithPopup(provider);
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+      firebase.auth().signInWithRedirect(provider);
+      firebase.auth().getRedirectResult();
     },
-    logOut: function() {
+    logOut: function () {
       firebase.auth().signOut();
     },
     getSuperEmails() {
@@ -125,8 +160,8 @@ export default {
         .firestore()
         .collection("admins")
         .get()
-        .then(collection => {
-          collection.forEach(doc => {
+        .then((collection) => {
+          collection.forEach((doc) => {
             this.superEmails.push(doc.data().email);
           });
         })
@@ -134,15 +169,7 @@ export default {
           this.checkStartUser();
           this.checkSignIn();
         });
-    }
-  }
+    },
+  },
 };
 </script>
-<style>
-.v-content {
-  background-color: #2b2b2b !important;
-}
-.v-list:not(.v-list--dense) {
-  background: #404040 !important;
-}
-</style>

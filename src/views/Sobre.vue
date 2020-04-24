@@ -4,7 +4,7 @@
       Este ePortfolio foi creado con
       <v-img
         max-width="16px"
-        style="display:inline-block"
+        style="display: inline-block;"
         src="https://vuejs.org/images/logo.png"
       />
       <a target="_blank" href="https://vuejs.org/">Vue.js</a>. Un framework de
@@ -15,7 +15,7 @@
       polo tanto é máis eficiente. Tamén utiliza
       <v-img
         max-width="16px"
-        style="display:inline-block"
+        style="display: inline-block;"
         src="https://store.vuetifyjs.com/img/vuetify.23e83d53.png"
       />
       <a target="_blank" href="https://vuetifyjs.com/es-MX/">Vuetify</a> para
@@ -26,7 +26,7 @@
       Tamén por
       <v-img
         max-width="16px"
-        style="display:inline-block"
+        style="display: inline-block;"
         src="https://cdn.worldvectorlogo.com/logos/firebase-1.svg"
       />
       <a href="https://firebase.google.com/?hl=es-419">Firebase</a> de Google,
@@ -37,7 +37,7 @@
       publicar comentarios, o cal se complementa con
       <v-img
         src="https://www.stickpng.com/assets/images/58481018cef1014c0b5e494a.png"
-        style="display:inline-block"
+        style="display: inline-block;"
         max-width="16px"
       /><a href="https://momentjs.com/" target="_blank">Moment.js</a> para
       mostrar hai canto tempo se publicou.
@@ -56,7 +56,7 @@
     </p>
     <v-row>
       <v-col sm="12" md="6"
-        ><MonacoEditor style="height: 500px" v-model="code" :options="options"
+        ><MonacoEditor style="height: 500px;" v-model="code" :options="options"
       /></v-col>
       <v-col sm="12" md="6" v-html="code"></v-col>
     </v-row>
@@ -71,7 +71,7 @@
 import MonacoEditor from "vue-monaco";
 export default {
   components: {
-    MonacoEditor
+    MonacoEditor,
   },
   data() {
     return {
@@ -79,9 +79,9 @@ export default {
         '<div class="display-1">Novidades!</div>\n<ul>\n<li>Enlace ao proxecto Anime Quiz, que superou as 10 descargas.</li>\n<li>Botóns para navegar entre as tarefas</li>\n<li>Actualización de dependencias</li>\n</ul>',
       options: {
         language: "html",
-        theme: "vs-dark"
-      }
+        theme: "vs-dark",
+      },
     };
-  }
+  },
 };
 </script>
