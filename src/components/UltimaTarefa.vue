@@ -7,7 +7,11 @@
       </v-card-title>
       <v-card-text v-html="contido[index]"> </v-card-text>
       <v-card-actions>
-        <v-btn text :to="'/tarefas/' + trimestre[index] + '/' + id[index]">
+        <v-btn
+          color="primary"
+          text
+          :to="'/tarefas/' + trimestre[index] + '/' + id[index]"
+        >
           Ver tarefa completa
         </v-btn>
       </v-card-actions>
@@ -23,20 +27,20 @@ export default {
       titulo: [],
       contido: [],
       trimestre: [],
-      id: []
+      id: [],
     };
   },
   mounted() {
     let cols = ["tarefas3", "tarefas2", "tarefas"];
-    cols.forEach(col => {
+    cols.forEach((col) => {
       firebase
         .firestore()
         .collection(col)
         .orderBy("creacion", "desc")
         .limit(1)
         .get()
-        .then(tarefa => {
-          tarefa.forEach(doc => {
+        .then((tarefa) => {
+          tarefa.forEach((doc) => {
             this.contido.push(doc.data().contido.slice(0, 700) + "...");
             this.titulo.push(doc.data().titulo);
             this.id.push(doc.id);
@@ -46,11 +50,11 @@ export default {
     });
   },
   methods: {
-    getTrimestre: function(trim) {
+    getTrimestre: function (trim) {
       if (trim == "tarefas") return 1;
       else if (trim == "tarefas2") return 2;
       else return 3;
-    }
-  }
+    },
+  },
 };
 </script>

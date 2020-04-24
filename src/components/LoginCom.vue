@@ -13,11 +13,11 @@ import firebase from "firebase/app";
 import "firebase/auth";
 export default {
   methods: {
-    login: function() {
+    login: function () {
       let provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(provider);
       firebase.auth().getRedirectResult();
-    }
-  }
+    },
+  },
 };
 </script>

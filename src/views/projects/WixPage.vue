@@ -57,7 +57,7 @@
           mercar algo está bloqueada.
         </p>
         <v-btn
-          color="accent"
+          color="primary"
           block
           target="_blank"
           href="https://vcmario3.wixsite.com/tienda-vidas"
@@ -76,7 +76,7 @@
       data="https://vcmario3.wixsite.com/tienda-vidas"
       width="1366px"
       height="768px"
-      style="text-align:center;overflow:auto;"
+      style="text-align: center; overflow: auto;"
     >
     </object>
   </v-container>
@@ -91,9 +91,9 @@ export default {
         "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/PaginaWix%2Fprincipal2.webp?alt=media&token=35845809-aec2-4b5d-a707-113e916bdcb1",
         "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/PaginaWix%2Fprincipal3.webp?alt=media&token=764e9e68-ae6f-4f5d-8caa-4b0247eba2d9",
         "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/PaginaWix%2Fprincipal4.webp?alt=media&token=00aa33e9-c499-44bb-8ea2-fe6d4812b4a1",
-        "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/PaginaWix%2Fprincipal5.webp?alt=media&token=5306f22f-67f4-469e-b16f-c44e463d34dc"
-      ]
+        "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/PaginaWix%2Fprincipal5.webp?alt=media&token=5306f22f-67f4-469e-b16f-c44e463d34dc",
+      ],
     };
-  }
+  },
 };
 </script>

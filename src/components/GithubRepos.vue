@@ -8,9 +8,9 @@
         <v-tab v-for="r in repos" :key="r.full_name">
           {{ r.name }}
         </v-tab>
-        <v-tabs-items style="background: #424242" v-model="tab">
+        <v-tabs-items v-model="tab">
           <v-tab-item v-for="r in repos" :key="r.full_name">
-            <v-card color="secondary" flat>
+            <v-card flat>
               <v-card-text>
                 <v-list>
                   <v-list-item>{{ r.description }}</v-list-item>
@@ -38,11 +38,11 @@
 </template>
 <script>
 export default {
-  data: function() {
+  data: function () {
     return {
       repos: [],
       tab: null,
-      loading: false
+      loading: false,
     };
   },
   mounted() {
@@ -58,6 +58,6 @@ export default {
     });
     request.open("GET", "https://api.github.com/users/Kingomac/repos");
     request.send();
-  }
+  },
 };
 </script>

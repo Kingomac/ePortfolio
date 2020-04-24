@@ -2,17 +2,8 @@
   <v-container class="home">
     <h1>ePortfolio TIC's 2º Bac</h1>
     <v-bottom-navigation>
-      <v-btn to="/tarefas">
-        <span>Tarefas</span>
-      </v-btn>
-      <v-btn to="/proxectos">
-        <span>Proxectos</span>
-      </v-btn>
-      <v-btn to="/sobre-este-eportfolio">
-        <span>Sobre este ePortfolio</span>
-      </v-btn>
-      <v-btn to="/sobre-min">
-        <span>Sobre min</span>
+      <v-btn v-for="n in navigation" :key="n.url" :to="n.url">
+        <span class="white--text">{{ n.text }}</span>
       </v-btn>
     </v-bottom-navigation>
     <v-row>
@@ -33,7 +24,8 @@ export default {
   name: "home",
   components: {
     UltimaTarefa,
-    ProxectosDestacados
-  }
+    ProxectosDestacados,
+  },
+  props: ["navigation"],
 };
 </script>

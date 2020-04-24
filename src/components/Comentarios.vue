@@ -22,17 +22,17 @@ import moment from "moment";
 export default {
   data() {
     return {
-      comentarios: []
+      comentarios: [],
     };
   },
   props: ["tarefa"],
   methods: {
-    cargarComentarios: function() {
+    cargarComentarios: function () {
       firebase
         .firestore()
         .collection("comentarios_tarefas")
         .orderBy("creado", "desc")
-        .onSnapshot(collection => {
+        .onSnapshot((collection) => {
           this.comentarios = [];
           collection.forEach((doc, index) => {
             if (doc.data().tarefa == this.tarefa) {
@@ -40,17 +40,17 @@ export default {
                 index: index,
                 usuario: doc.data().usuario,
                 contenido: doc.data().contenido,
-                creacion: moment(doc.data().creado.toDate()).fromNow()
+                creacion: moment(doc.data().creado.toDate()).fromNow(),
               };
               this.comentarios.push(data);
             }
           });
         });
-    }
+    },
   },
   mounted() {
     moment.locale("gl");
     this.cargarComentarios();
-  }
+  },
 };
 </script>

@@ -53,10 +53,11 @@
         </v-row>
       </v-card-text>
       <v-card-actions>
-        <v-btn text to="/proxectos/animequiz">
+        <v-btn color="primary" text to="/proxectos/animequiz">
           Ver proxecto completo
         </v-btn>
         <v-btn
+          color="primary"
           text
           target="_blank"
           href="http://ai2.appinventor.mit.edu/?galleryId=6031644886171648"
@@ -93,11 +94,12 @@
         />
       </v-card-text>
       <v-card-actions>
-        <v-btn text to="/proxectos/paxina-con-wix">
+        <v-btn color="primary" text to="/proxectos/paxina-con-wix">
           Ver proxecto completo
         </v-btn>
         <v-btn
           text
+          color="primary"
           target="_blank"
           href="https://vcmario3.wixsite.com/tienda-vidas"
         >

@@ -87,23 +87,23 @@ export default {
   components: {
     EscribirComentario,
     Comentarios,
-    LoginCom
+    LoginCom,
   },
   methods: {
-    activateSnapshot: function() {
+    activateSnapshot: function () {
       this.cargando = true;
       firebase
         .firestore()
         .collection(this.trimestre)
         .doc(this.$route.params.id)
         .get()
-        .then(snapshot => {
+        .then((snapshot) => {
           this.title = snapshot.data().titulo;
           this.content = snapshot.data().contido;
         })
         .then(() => (this.cargando = false));
     },
-    eliminar: function() {
+    eliminar: function () {
       this.btnEliminando = true;
       firebase
         .firestore()
@@ -112,11 +112,11 @@ export default {
         .delete()
         .then(() => {
           this.$router.push({
-            name: "tarefas"
+            name: "tarefas",
           });
         });
     },
-    go: function(tarefas, sumar) {
+    go: function (tarefas, sumar) {
       if (
         tarefas[this.$route.params.trimestre - 1][
           tarefas[this.$route.params.trimestre - 1].indexOf(
@@ -133,11 +133,11 @@ export default {
               tarefas[this.$route.params.trimestre - 1].indexOf(
                 this.$route.params.id
               ) + sumar
-            ]
+            ],
         });
         this.activateSnapshot();
       }
-    }
+    },
   },
   computed: {
     trimestre() {
@@ -151,7 +151,7 @@ export default {
         default:
           return "tarefas";
       }
-    }
+    },
   },
   data() {
     return {
@@ -159,7 +159,7 @@ export default {
       content: "",
       dialog: false,
       btnEliminando: false,
-      cargando: true
+      cargando: true,
     };
   },
   props: ["signedIn", "superSignedIn", "tarefas"],
@@ -173,15 +173,15 @@ export default {
           .collection(val)
           .orderBy("creacion", "asc")
           .get()
-          .then(res => {
+          .then((res) => {
             let tarefas = [];
-            res.forEach(doc => {
+            res.forEach((doc) => {
               tarefas.push(doc.id);
             });
             store.commit("setTarefas", { id: index, tarefas });
           });
       });
     }
-  }
+  },
 };
 </script>

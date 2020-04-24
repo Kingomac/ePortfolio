@@ -23,26 +23,22 @@ import "firebase/firestore";
 export default Vue.extend({
   data() {
     return {
-      texto: ""
+      texto: "",
     };
   },
   methods: {
-    publicarComentario: function() {
+    publicarComentario: function () {
       if (this.texto !== "") {
         const data = {
           usuario: firebase.auth().currentUser.displayName,
           contenido: this.texto,
           tarefa: this.$route.params.id,
-          creado: firebase.firestore.FieldValue.serverTimestamp()
+          creado: firebase.firestore.FieldValue.serverTimestamp(),
         };
-        firebase
-          .firestore()
-          .collection("comentarios_tarefas")
-          .doc()
-          .set(data);
+        firebase.firestore().collection("comentarios_tarefas").doc().set(data);
         this.texto = "";
       }
-    }
-  }
+    },
+  },
 });
 </script>

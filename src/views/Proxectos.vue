@@ -1,11 +1,11 @@
 <template>
-  <div style="width:100%">
+  <div style="width: 100%;">
     <h1>Proxectos</h1>
     <v-container fluid>
       <v-row justify="center">
         <v-col>
           <h2>1º Trimestre</h2>
-          <v-list>
+          <v-list color="list">
             <linktarefa
               v-for="p in proxectos"
               :to="'/proxectos/1/' + p.id"
@@ -16,15 +16,12 @@
         </v-col>
         <v-col>
           <h2>2º Trimestre</h2>
-          <v-list>
-            <v-list-item to="/proxectos/animequiz">
-              <v-list-item-title>App: Anime Quiz</v-list-item-title>
-            </v-list-item>
-            <v-list-item to="/proxectos/paxina-con-wix">
-              <v-list-item-title
-                >Páxina feita cun editor WYSIWYG</v-list-item-title
-              >
-            </v-list-item>
+          <v-list color="list">
+            <linktarefa to="/proxectos/animequiz" text="App: Anime Quiz" />
+            <linktarefa
+              to="/proxectos/paxina-con-wix"
+              text="Páxina feita cun editor WYSIWIG"
+            />
             <linktarefa
               v-for="p in proxectos2"
               :to="'/proxectos/2/' + p.id"
@@ -35,7 +32,7 @@
         </v-col>
         <v-col>
           <h2>3º Trimestre</h2>
-          <v-list>
+          <v-list color="list">
             <linktarefa
               v-for="p in proxectos3"
               :to="'/proxectos/3/' + p.id"
@@ -54,7 +51,7 @@ import "firebase/firestore";
 import linktarefa from "../components/LinkTarefa.vue";
 export default {
   components: {
-    linktarefa
+    linktarefa,
   },
   data() {
     return {
@@ -71,36 +68,36 @@ export default {
         "red accent-1",
         "red accent-2",
         "red accent-3",
-        "red accent-4"
+        "red accent-4",
       ],
       proxectos: [],
       proxectos2: [],
-      proxectos3: []
+      proxectos3: [],
     };
   },
   methods: {
-    setSnapshot: function(trimestre) {
+    setSnapshot: function (trimestre) {
       let array = [];
       firebase
         .firestore()
         .collection(trimestre)
         .orderBy("creacion")
-        .onSnapshot(snapshot => {
-          snapshot.forEach(doc => {
+        .onSnapshot((snapshot) => {
+          snapshot.forEach((doc) => {
             let data = {
               id: doc.id,
-              titulo: doc.data().titulo
+              titulo: doc.data().titulo,
             };
             array.push(data);
           });
         });
       return array;
-    }
+    },
   },
   created() {
     this.proxectos = this.setSnapshot("proxectos");
     this.proxectos2 = this.setSnapshot("proxectos2");
     this.proxectos3 = this.setSnapshot("proxectos3");
-  }
+  },
 };
 </script>

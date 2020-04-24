@@ -136,7 +136,7 @@ export default {
         "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/App%2F8.webp?alt=media&token=831cb727-90c6-4ee6-b25c-8e44beaba068",
         "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/App%2F9.webp?alt=media&token=8fe77d01-9b80-4787-95f5-56abac9f5135",
         "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/App%2F10.webp?alt=media&token=fd9dd50b-70ad-4c75-8cc1-7a478468cc92",
-        "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/App%2F12.webp?alt=media&token=ed6d0ac4-274c-464e-bca0-3c809f014272"
+        "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/App%2F12.webp?alt=media&token=ed6d0ac4-274c-464e-bca0-3c809f014272",
       ],
       bloques: [
         "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/App%2Fbloques%2F1.webp?alt=media&token=404f6c61-e16a-49c3-bec3-e2cbcbf9c849",
@@ -144,9 +144,9 @@ export default {
         "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/App%2Fbloques%2F3.webp?alt=media&token=d75bb380-f2c0-486f-8d62-76b44bfdfba0",
         "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/App%2Fbloques%2F4.webp?alt=media&token=86dcefbb-43a9-4cba-b8c8-851b695870ea",
         "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/App%2Fbloques%2F5.webp?alt=media&token=f81ff25a-7320-4ceb-ab38-90bd221c4434",
-        "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/App%2Fbloques%2F6.webp?alt=media&token=65bf2e68-96f6-43ff-a86c-aa54258432ba"
-      ]
+        "https://firebasestorage.googleapis.com/v0/b/e-portfolio-2ffac.appspot.com/o/App%2Fbloques%2F6.webp?alt=media&token=65bf2e68-96f6-43ff-a86c-aa54258432ba",
+      ],
     };
-  }
+  },
 };
 </script>

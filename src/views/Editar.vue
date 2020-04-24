@@ -22,7 +22,7 @@
         </v-row>
         <v-text-field v-model="titulo" required label="Titulo" />
         <MonacoEditor
-          style="height: 500px"
+          style="height: 500px;"
           v-model="contido"
           :options="options"
         />
@@ -40,16 +40,16 @@ import MonacoEditor from "vue-monaco";
 
 export default {
   components: {
-    MonacoEditor
+    MonacoEditor,
   },
   methods: {
-    intialize: function() {
+    intialize: function () {
       firebase
         .firestore()
         .collection(this.collection)
         .doc(this.id)
         .get()
-        .then(resp => {
+        .then((resp) => {
           this.titulo = resp.data().titulo;
           this.contido = resp.data().contido;
           this.creacion = resp.data().creacion;
@@ -60,19 +60,15 @@ export default {
       else if (this.collection.includes("3")) this.trimestre = 3;
       else this.trimestre = 1;
     },
-    save: function() {
+    save: function () {
       let timestamp = firebase.firestore.FieldValue.serverTimestamp();
       const data = {
         titulo: this.titulo,
         contido: this.contido,
         creacion: this.creacion,
-        actualizacion: timestamp
+        actualizacion: timestamp,
       };
-      firebase
-        .firestore()
-        .collection(this.collection)
-        .doc(this.id)
-        .set(data);
+      firebase.firestore().collection(this.collection).doc(this.id).set(data);
       this.$router.back();
     },
     unminify: function unminify(code) {
@@ -83,13 +79,13 @@ export default {
         .replace(' target="_blank"', "")
         .slice(1);
     },
-    processContent: function(content) {
+    processContent: function (content) {
       return content
         .split("<a ")
         .join('<a target="_blank" ')
         .replace(/(\r\n|\n|\r)/gm, "")
         .replace("http://", "https://");
-    }
+    },
   },
   data() {
     return {
@@ -102,13 +98,13 @@ export default {
       id: this.$route.params.id,
       options: {
         language: "html",
-        theme: "vs-dark"
-      }
+        theme: "vs-dark",
+      },
     };
   },
   created() {
     this.intialize();
   },
-  props: ["superSignedIn"]
+  props: ["superSignedIn"],
 };
 </script>

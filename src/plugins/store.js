@@ -5,11 +5,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    tarefas: [[], [], []]
+    tarefas: [[], [], []],
   },
   mutations: {
     setTarefas(state, tarefas) {
       state.tarefas[tarefas.id] = tarefas.tarefas;
-    }
-  }
+    },
+  },
 });

@@ -5,9 +5,9 @@
     </v-row>
     <v-row class="my-1" justify="center">
       <v-col cols="4" v-for="a in animes" :key="a.nome">
-        <v-card>
-          <v-img width="500px" height="300px" :src="a.imaxe">
-            <v-card-title style="background:rgba(0,0,0,0.4)">
+        <v-card width="550px">
+          <v-img width="550px" height="300px" :src="a.imaxe">
+            <v-card-title style="background: rgba(0, 0, 0, 0.4); color: white;">
               {{ a.nome }}
             </v-card-title>
           </v-img>
@@ -17,13 +17,11 @@
   </div>
 </template>
 <script>
-import firebase from "firebase/app";
-import "firebase/storage";
 export default {
-  data: function() {
+  data: function () {
     return {
       animes: [],
-      loading: false
+      loading: false,
     };
   },
   mounted() {
@@ -38,18 +36,11 @@ export default {
         }
       }
     });
-    firebase
-      .storage()
-      .ref()
-      .child("recommendations.json")
-      .getDownloadURL()
-      .then(() => {
-        request.open(
-          "GET",
-          "http://127.0.0.1:5500/src/assets/recommendations.json"
-        );
-        request.send();
-      });
-  }
+    request.open(
+      "GET",
+      "https://raw.githubusercontent.com/Kingomac/ePortfolio/dev/src/assets/recommendations.json"
+    );
+    request.send();
+  },
 };
 </script>

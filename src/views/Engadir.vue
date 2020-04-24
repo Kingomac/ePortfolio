@@ -22,14 +22,16 @@
           </v-col>
         </v-row>
         <v-text-field v-model="titulo" required label="Titulo" />
-        <div style="width:100%;height:600px;">
+        <div style="width: 100%; height: 600px;">
           <MonacoEditor
-            style="width:100%;height:100%;overflow:auto;"
+            style="width: 100%; height: 100%; overflow: auto;"
             v-model="contido"
             :options="options"
           />
         </div>
-        <v-btn block class="ma-8 success" @click="submit">Engadir</v-btn>
+        <v-btn block class="ma-8" color="primary" @click="submit"
+          >Engadir</v-btn
+        >
       </form>
       <h2>Vista previa</h2>
       <v-container v-html="contido"> </v-container>
@@ -43,7 +45,7 @@ import "firebase/auth";
 import MonacoEditor from "vue-monaco";
 export default {
   components: {
-    MonacoEditor
+    MonacoEditor,
   },
   data() {
     return {
@@ -53,35 +55,31 @@ export default {
       trimestre: 1,
       options: {
         language: "html",
-        theme: "vs-dark"
-      }
+        theme: "vs-dark",
+      },
     };
   },
   methods: {
-    submit: function() {
+    submit: function () {
       let timestamp = firebase.firestore.FieldValue.serverTimestamp();
       const data = {
         titulo: this.titulo,
         contido: this.contido,
-        creacion: timestamp
+        creacion: timestamp,
       };
-      firebase
-        .firestore()
-        .collection(this.collection)
-        .doc()
-        .set(data);
+      firebase.firestore().collection(this.collection).doc().set(data);
       this.titulo = "";
       this.contido = "";
       this.tipo = "Tarefa";
       this.trimestre = 1;
     },
-    processContent: function(content) {
+    processContent: function (content) {
       return content
         .split("<a ")
         .join('<a target="_blank" ')
         .replace(/(\r\n|\n|\r)/gm, "")
         .replace("http://", "https://");
-    }
+    },
   },
   computed: {
     collection() {
@@ -98,8 +96,8 @@ export default {
         default:
           return "error";
       }
-    }
+    },
   },
-  props: ["superSignedIn"]
+  props: ["superSignedIn"],
 };
 </script>

@@ -41,7 +41,7 @@ import GithubRepos from "../components/GithubRepos";
 export default {
   components: {
     GithubRepos,
-    AnimeRecom
-  }
+    AnimeRecom,
+  },
 };
 </script>
