@@ -4,15 +4,8 @@
       <span class="headline">Escribir un comentario</span>
     </v-card-title>
     <v-card-text>
-      <v-textarea
-        height="100"
-        auto-grow
-        dark
-        clearable
-        outlined
-        v-model="texto"
-      />
-      <v-btn block @click="publicarComentario">Publicar</v-btn>
+      <v-textarea height="100" auto-grow clearable outlined v-model="texto" />
+      <v-btn block color="primary" click="publicarComentario">Publicar</v-btn>
     </v-card-text>
   </v-card>
 </template>

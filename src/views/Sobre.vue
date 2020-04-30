@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       code:
-        '<div class="display-1">Novidades!</div>\n<ul>\n<li>Enlace ao proxecto Anime Quiz, que superou as 10 descargas.</li>\n<li>Botóns para navegar entre as tarefas</li>\n<li>Actualización de dependencias</li>\n</ul>',
+        '<div class="display-1">Novidades!</div><ul> <li>Cambio da portada da páxina a unha lista coa última tarefa de cada trimestre e proxectos destacados</li><li>Tema claro e se garda no LocalStorage a opción</li><li>Inicio de sesión con redirección en lugar de popup</li><li>O ano do footer de copyright cambia automaticamente</li><li>Uso de EsLint para que o código sexa náis fácil de ler</li><li>Uso de Github Actions para facer o desplegue</li></ul>',
       options: {
         language: "html",
         theme: "vs-dark",

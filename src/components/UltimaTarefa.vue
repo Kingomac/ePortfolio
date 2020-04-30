@@ -8,7 +8,7 @@
       <v-card-text v-html="contido[index]"> </v-card-text>
       <v-card-actions>
         <v-btn
-          color="primary"
+          color="accent"
           text
           :to="'/tarefas/' + trimestre[index] + '/' + id[index]"
         >
