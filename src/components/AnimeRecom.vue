@@ -4,7 +4,7 @@
       <v-progress-circular class="my-3" indeterminate v-if="loading" />
     </v-row>
     <v-row class="my-1" justify="center">
-      <v-col cols="4" v-for="a in animes" :key="a.nome">
+      <v-col sm="12" md="4" v-for="a in animes" :key="a.nome">
         <v-card width="550px">
           <v-img width="550px" height="300px" :src="a.imaxe">
             <v-card-title style="background: rgba(0, 0, 0, 0.4); color: white;">

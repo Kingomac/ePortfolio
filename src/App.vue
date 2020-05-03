@@ -50,7 +50,7 @@
       </v-btn>
     </v-app-bar>
     <v-content>
-      <v-container justify="center" class="p-2" fluid>
+      <v-container fluid>
         <router-view
           :navigation="navigation"
           :superSignedIn="superSignedIn"

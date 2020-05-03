@@ -19,7 +19,7 @@
       >
       e este ePortfolio.
     </p>
-    <v-tabs fixed-tabs>
+    <v-tabs show-arrows grow>
       <v-tab>
         Recomendacións de anime
       </v-tab>
