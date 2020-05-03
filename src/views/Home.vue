@@ -1,11 +1,13 @@
 <template>
   <v-container class="home">
     <h1>ePortfolio TIC's 2º Bac</h1>
-    <v-bottom-navigation>
-      <v-btn v-for="n in navigation" :key="n.url" :to="n.url">
-        <span class="white--text">{{ n.text }}</span>
-      </v-btn>
-    </v-bottom-navigation>
+    <div style="overflow-x: visible;">
+      <v-bottom-navigation>
+        <v-btn v-for="n in navigation" :key="n.url" :to="n.url">
+          <span class="white--text">{{ n.text }}</span>
+        </v-btn>
+      </v-bottom-navigation>
+    </div>
     <v-row>
       <v-col sm="12" md="6">
         <UltimaTarefa />
